@@ -15,6 +15,8 @@
 		958F33FE1B1FEB1F00A34098 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 958F33FD1B1FEB1F00A34098 /* Images.xcassets */; };
 		958F34011B1FEB1F00A34098 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 958F33FF1B1FEB1F00A34098 /* LaunchScreen.xib */; };
 		958F340D1B1FEB1F00A34098 /* StarMazeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 958F340C1B1FEB1F00A34098 /* StarMazeTests.swift */; };
+		958F34171B1FED6A00A34098 /* moving.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 958F34161B1FED6A00A34098 /* moving.atlas */; };
+		958F34191B20005400A34098 /* Hero.swift in Sources */ = {isa = PBXBuildFile; fileRef = 958F34181B20005400A34098 /* Hero.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +42,8 @@
 		958F34061B1FEB1F00A34098 /* StarMazeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StarMazeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		958F340B1B1FEB1F00A34098 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		958F340C1B1FEB1F00A34098 /* StarMazeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarMazeTests.swift; sourceTree = "<group>"; };
+		958F34161B1FED6A00A34098 /* moving.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = moving.atlas; sourceTree = "<group>"; };
+		958F34181B20005400A34098 /* Hero.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hero.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,9 +88,11 @@
 				958F33F21B1FEB1E00A34098 /* AppDelegate.swift */,
 				958F33F41B1FEB1E00A34098 /* GameScene.sks */,
 				958F33F61B1FEB1E00A34098 /* GameScene.swift */,
+				958F34181B20005400A34098 /* Hero.swift */,
 				958F33F81B1FEB1E00A34098 /* GameViewController.swift */,
 				958F33FA1B1FEB1E00A34098 /* Main.storyboard */,
 				958F33FD1B1FEB1F00A34098 /* Images.xcassets */,
+				958F34161B1FED6A00A34098 /* moving.atlas */,
 				958F33FF1B1FEB1F00A34098 /* LaunchScreen.xib */,
 				958F33F01B1FEB1E00A34098 /* Supporting Files */,
 			);
@@ -201,6 +207,7 @@
 				958F34011B1FEB1F00A34098 /* LaunchScreen.xib in Resources */,
 				958F33FE1B1FEB1F00A34098 /* Images.xcassets in Resources */,
 				958F33F51B1FEB1E00A34098 /* GameScene.sks in Resources */,
+				958F34171B1FED6A00A34098 /* moving.atlas in Resources */,
 				958F33FC1B1FEB1E00A34098 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -222,6 +229,7 @@
 				958F33F71B1FEB1E00A34098 /* GameScene.swift in Sources */,
 				958F33F91B1FEB1E00A34098 /* GameViewController.swift in Sources */,
 				958F33F31B1FEB1E00A34098 /* AppDelegate.swift in Sources */,
+				958F34191B20005400A34098 /* Hero.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
