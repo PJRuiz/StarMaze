@@ -30,6 +30,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
     var hero:Hero?
     var heroIsDead = false
     
+    var starsAcquired = 0
+    var starsTotal = 0
+    
     var useTMXFiles: Bool = true
     
     
@@ -94,6 +97,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         if (useTMXFiles == false) {
             println("setup with SKS")
             setUpBoundaryFromSKS()
+            setUpStarsFromSKS()
         } else {
             parseTMXFileWithName("Maze")
             mazeWorld!.position = CGPoint(x: mazeWorld!.position.x, y: mazeWorld!.position.y + 800)
@@ -115,6 +119,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
                 
                 boundary.removeFromParent( )
                 
+            }
+            
+        }
+    }
+    
+    //MARK: - Setup Stars
+    func setUpStarsFromSKS() {
+        mazeWorld!.enumerateChildNodesWithName("star") {
+            node, stop in
+            
+            if let star = node as? SKSpriteNode {
+                let newStar: Star = Star()
+                self.mazeWorld!.addChild(newStar)
+                newStar.position = star.position
+                
+                self.starsTotal++
+                
+                star.removeFromParent()
             }
             
         }
@@ -170,8 +192,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         let contactMask = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
         
         switch(contactMask) {
-            case BodyType.hero.rawValue | BodyType.boundary.rawValue:
-                println("Ran into wall")
+            case BodyType.hero.rawValue | BodyType.star.rawValue:
+                if let star = contact.bodyA.node as? Star {
+                    star.removeFromParent()
+                } else if let star = contact.bodyB.node as? Star {
+                    star.removeFromParent()
+                }
+            
+                starsAcquired++
+            
+                if starsAcquired == starsTotal {
+                    println("got all the stars")
+                }
+            
         default:
             return
         }
@@ -209,6 +242,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
             if (type as? String == "Boundary") {
                 let newBoundary = Boundary(theDict: attributeDict)
                 mazeWorld!.addChild(newBoundary)
+                
+            } else if (type as? String == "Star") {
+                let newStar = Star(fromTMXFileWithDict: attributeDict)
+                mazeWorld!.addChild(newStar)
+                starsTotal++
+                
             } else if type as? String == "Portal" {
                 let theName = attributeDict["name"] as AnyObject? as! String
                 
