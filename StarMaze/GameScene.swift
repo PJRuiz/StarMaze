@@ -21,7 +21,7 @@ enum BodyType:UInt32 {
     case boundary2 = 256
 }
 
-class GameScene: SKScene {
+class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
     
     //MARK: - Instance Variables
     var currentSpeed: Float = 5
@@ -29,7 +29,7 @@ class GameScene: SKScene {
     var mazeWorld: SKNode?
     var hero:Hero?
     
-    var useTMXFiles: Bool = false
+    var useTMXFiles: Bool = true
     
     
     //MARK: - Initialize View
@@ -39,9 +39,27 @@ class GameScene: SKScene {
         view.showsPhysics = true
         
         self.physicsWorld.gravity = CGVector(dx: 0, dy: 0)
+        
+        physicsWorld.contactDelegate = self
+        
+        //TODO: - Set up based on TMX or SKS
+        
+        if (useTMXFiles == true) {
+            println("setup with tmx")
+            
+            self.enumerateChildNodesWithName("*") {
+                node, stop in
+                node.removeFromParent()
+            }
+            mazeWorld = SKNode()
+            addChild(mazeWorld!)
+        } else {
+            mazeWorld = childNodeWithName("mazeWorld")
+            heroLocation = mazeWorld!.childNodeWithName("StartingPoint")!.position
 
-        mazeWorld = childNodeWithName("mazeWorld")
-        heroLocation = mazeWorld!.childNodeWithName("StartingPoint")!.position
+        }
+
+
         
         hero = Hero()
         hero!.position = heroLocation
@@ -74,11 +92,12 @@ class GameScene: SKScene {
         
         //TODO: - Set up based on TMX or SKS
         
-        if (useTMXFiles == true) {
-            println("setup with tmx")
-        } else {
+        if (useTMXFiles == false) {
             println("setup with SKS")
             setUpBoundaryFromSKS()
+        } else {
+            parseTMXFileWithName("Maze")
+            mazeWorld!.position = CGPoint(x: mazeWorld!.position.x, y: mazeWorld!.position.y + 800)
         }
     }
     
@@ -132,6 +151,54 @@ class GameScene: SKScene {
     //MARK: - Update Cycle
     override func update(currentTime: CFTimeInterval) {
         hero!.update()
+    }
+    
+    //MARK: - Contact Delegates
+    
+    func didBeginContact(contact: SKPhysicsContact) {
+        let contactMask = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
+        
+        switch(contactMask) {
+            case BodyType.hero.rawValue | BodyType.boundary.rawValue:
+                println("Ran into wall")
+        default:
+            return
+        }
+    }
+    
+    func didEndContact(contact: SKPhysicsContact) {
+        let contactMask = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
+        
+        switch(contactMask) {
+        case BodyType.hero.rawValue | BodyType.boundary.rawValue:
+            println("Not touching wall")
+        default:
+            return
+        }
+
+    }
+    
+    func parseTMXFileWithName (name:NSString ) {
+        let path:String = NSBundle.mainBundle().pathForResource(name as String, ofType: "tmx")!
+        
+        let data = NSData(contentsOfFile: path)
+        
+        let parser:NSXMLParser = NSXMLParser(data: data!)
+        
+        parser.delegate = self
+        
+        parser.parse()
+    }
+    
+    func parser(parser: NSXMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [NSObject : AnyObject]) {
+        if (elementName == "object") {
+            let type: AnyObject? = attributeDict["type"]
+            
+            if (type as? String == "Boundary") {
+                let newBoundary = Boundary(theDict: attributeDict)
+                mazeWorld!.addChild(newBoundary)
+            }
+        }
     }
     
     

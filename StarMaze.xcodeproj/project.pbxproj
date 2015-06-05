@@ -18,6 +18,7 @@
 		958F34171B1FED6A00A34098 /* moving.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 958F34161B1FED6A00A34098 /* moving.atlas */; };
 		958F34191B20005400A34098 /* Hero.swift in Sources */ = {isa = PBXBuildFile; fileRef = 958F34181B20005400A34098 /* Hero.swift */; };
 		958F341B1B2166A300A34098 /* Boundary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 958F341A1B2166A300A34098 /* Boundary.swift */; };
+		958F341D1B217C4F00A34098 /* Maze.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 958F341C1B217C4F00A34098 /* Maze.tmx */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +47,7 @@
 		958F34161B1FED6A00A34098 /* moving.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = moving.atlas; sourceTree = "<group>"; };
 		958F34181B20005400A34098 /* Hero.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hero.swift; sourceTree = "<group>"; };
 		958F341A1B2166A300A34098 /* Boundary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Boundary.swift; sourceTree = "<group>"; };
+		958F341C1B217C4F00A34098 /* Maze.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Maze.tmx; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +96,7 @@
 				958F341A1B2166A300A34098 /* Boundary.swift */,
 				958F33F81B1FEB1E00A34098 /* GameViewController.swift */,
 				958F33FA1B1FEB1E00A34098 /* Main.storyboard */,
+				958F341C1B217C4F00A34098 /* Maze.tmx */,
 				958F33FD1B1FEB1F00A34098 /* Images.xcassets */,
 				958F34161B1FED6A00A34098 /* moving.atlas */,
 				958F33FF1B1FEB1F00A34098 /* LaunchScreen.xib */,
@@ -176,6 +179,7 @@
 				TargetAttributes = {
 					958F33EC1B1FEB1E00A34098 = {
 						CreatedOnToolsVersion = 6.3.1;
+						DevelopmentTeam = 74VVV5ZXY4;
 					};
 					958F34051B1FEB1F00A34098 = {
 						CreatedOnToolsVersion = 6.3.1;
@@ -209,6 +213,7 @@
 			files = (
 				958F34011B1FEB1F00A34098 /* LaunchScreen.xib in Resources */,
 				958F33FE1B1FEB1F00A34098 /* Images.xcassets in Resources */,
+				958F341D1B217C4F00A34098 /* Maze.tmx in Resources */,
 				958F33F51B1FEB1E00A34098 /* GameScene.sks in Resources */,
 				958F34171B1FED6A00A34098 /* moving.atlas in Resources */,
 				958F33FC1B1FEB1E00A34098 /* Main.storyboard in Resources */,
@@ -362,6 +367,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = StarMaze/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -372,6 +378,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = StarMaze/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
