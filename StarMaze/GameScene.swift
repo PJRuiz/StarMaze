@@ -9,10 +9,22 @@
 //MARK: - Import Frameworks
 import SpriteKit
 
+enum BodyType:UInt32 {
+    case hero = 1
+    case boundary = 2
+    case sensorUp = 4
+    case sensorDown = 8
+    case sensorRight = 16
+    case sensorLeft = 32
+    case star = 64
+    case enemy = 128
+    case boundary2 = 256
+}
+
 class GameScene: SKScene {
     
     //MARK: - Instance Variables
-    var currentSpeed: Float = 0
+    var currentSpeed: Float = 5
     var heroLocation: CGPoint = CGPointZero
     var mazeWorld: SKNode?
     var hero:Hero?
@@ -22,6 +34,9 @@ class GameScene: SKScene {
     override func didMoveToView(view: SKView) {
         
         self.backgroundColor = SKColor.blackColor()
+        view.showsPhysics = true
+        
+        self.physicsWorld.gravity = CGVector(dx: 0, dy: 0)
 
         mazeWorld = childNodeWithName("mazeWorld")
         heroLocation = mazeWorld!.childNodeWithName("StartingPoint")!.position
