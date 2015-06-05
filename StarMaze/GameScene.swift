@@ -28,6 +28,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
     var heroLocation: CGPoint = CGPointZero
     var mazeWorld: SKNode?
     var hero:Hero?
+    var heroIsDead = false
     
     var useTMXFiles: Bool = true
     
@@ -42,7 +43,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         
         physicsWorld.contactDelegate = self
         
-        //TODO: - Set up based on TMX or SKS
+        self.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         
         if (useTMXFiles == true) {
             println("setup with tmx")
@@ -89,8 +90,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
             view.addGestureRecognizer(swipeDown)
             
         })
-        
-        //TODO: - Set up based on TMX or SKS
         
         if (useTMXFiles == false) {
             println("setup with SKS")
@@ -153,6 +152,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         hero!.update()
     }
     
+    override func didSimulatePhysics() {
+        if (heroIsDead == false) {
+            self.centerOnNode(hero!)
+        }
+    }
+    
+    func centerOnNode (node: SKNode) {
+        let cameraPositionInScene = self.convertPoint(node.position, fromNode: mazeWorld!)
+        mazeWorld!.position = CGPoint(x: mazeWorld!.position.x - cameraPositionInScene.x, y: mazeWorld!.position.y - cameraPositionInScene.y)
+    }
+
+    
     //MARK: - Contact Delegates
     
     func didBeginContact(contact: SKPhysicsContact) {
@@ -178,6 +189,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
 
     }
     
+    //MARK: - Tiled Parsing
     func parseTMXFileWithName (name:NSString ) {
         let path:String = NSBundle.mainBundle().pathForResource(name as String, ofType: "tmx")!
         
@@ -197,10 +209,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
             if (type as? String == "Boundary") {
                 let newBoundary = Boundary(theDict: attributeDict)
                 mazeWorld!.addChild(newBoundary)
+            } else if type as? String == "Portal" {
+                let theName = attributeDict["name"] as AnyObject? as! String
+                
+                if theName == "StartingPoint" {
+                    let theX:String = attributeDict["x"] as AnyObject? as! String
+                    let x:Int = theX.toInt( )!
+                    
+                    let theY:String = attributeDict["y"] as AnyObject? as! String
+                    let y:Int = theY.toInt( )!
+                    
+                    hero!.position = CGPoint(x: x, y: y * -1)
+                    heroLocation = hero!.position
+
+                }
             }
         }
     }
     
-    
-    
+    //MARK: - Final Closure
 }
