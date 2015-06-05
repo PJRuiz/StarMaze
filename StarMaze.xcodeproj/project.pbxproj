@@ -17,6 +17,7 @@
 		958F340D1B1FEB1F00A34098 /* StarMazeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 958F340C1B1FEB1F00A34098 /* StarMazeTests.swift */; };
 		958F34171B1FED6A00A34098 /* moving.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 958F34161B1FED6A00A34098 /* moving.atlas */; };
 		958F34191B20005400A34098 /* Hero.swift in Sources */ = {isa = PBXBuildFile; fileRef = 958F34181B20005400A34098 /* Hero.swift */; };
+		958F341B1B2166A300A34098 /* Boundary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 958F341A1B2166A300A34098 /* Boundary.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +45,7 @@
 		958F340C1B1FEB1F00A34098 /* StarMazeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarMazeTests.swift; sourceTree = "<group>"; };
 		958F34161B1FED6A00A34098 /* moving.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = moving.atlas; sourceTree = "<group>"; };
 		958F34181B20005400A34098 /* Hero.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hero.swift; sourceTree = "<group>"; };
+		958F341A1B2166A300A34098 /* Boundary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Boundary.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +91,7 @@
 				958F33F41B1FEB1E00A34098 /* GameScene.sks */,
 				958F33F61B1FEB1E00A34098 /* GameScene.swift */,
 				958F34181B20005400A34098 /* Hero.swift */,
+				958F341A1B2166A300A34098 /* Boundary.swift */,
 				958F33F81B1FEB1E00A34098 /* GameViewController.swift */,
 				958F33FA1B1FEB1E00A34098 /* Main.storyboard */,
 				958F33FD1B1FEB1F00A34098 /* Images.xcassets */,
@@ -230,6 +233,7 @@
 				958F33F91B1FEB1E00A34098 /* GameViewController.swift in Sources */,
 				958F33F31B1FEB1E00A34098 /* AppDelegate.swift in Sources */,
 				958F34191B20005400A34098 /* Hero.swift in Sources */,
+				958F341B1B2166A300A34098 /* Boundary.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

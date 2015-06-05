@@ -29,6 +29,8 @@ class GameScene: SKScene {
     var mazeWorld: SKNode?
     var hero:Hero?
     
+    var useTMXFiles: Bool = false
+    
     
     //MARK: - Initialize View
     override func didMoveToView(view: SKView) {
@@ -70,7 +72,34 @@ class GameScene: SKScene {
             
         })
         
+        //TODO: - Set up based on TMX or SKS
         
+        if (useTMXFiles == true) {
+            println("setup with tmx")
+        } else {
+            println("setup with SKS")
+            setUpBoundaryFromSKS()
+        }
+    }
+    
+    //MARK: - Boundary Setup
+    func setUpBoundaryFromSKS() {
+        mazeWorld!.enumerateChildNodesWithName("boundary") {
+            node, stop in
+            
+            if let boundary = node as? SKSpriteNode {
+                let rect = CGRect(origin: boundary.position, size: boundary.size)
+                
+                let newBoundary = Boundary(fromSKSwithRect: rect)
+                
+                self.mazeWorld!.addChild(newBoundary)
+                newBoundary.position = boundary.position
+                
+                boundary.removeFromParent( )
+                
+            }
+            
+        }
     }
     
     //MARK: - Touch Functions
