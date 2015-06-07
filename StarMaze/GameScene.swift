@@ -33,6 +33,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
     var starsAcquired = 0
     var starsTotal = 0
     
+    var enemyCount = 0
+    var enemyDictionary:[String : CGPoint] = [:]
+    
     var useTMXFiles: Bool = true
     
     
@@ -99,13 +102,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
             setUpBoundaryFromSKS()
             setUpEdgeFromSKS()
             setUpStarsFromSKS()
+            setUpEnemiesFromSKS()
         } else {
             parseTMXFileWithName("Maze")
             mazeWorld!.position = CGPoint(x: mazeWorld!.position.x, y: mazeWorld!.position.y + 800)
         }
     }
     
-    //MARK: - Boundary Setup
+    //MARK: - Setup from SKS
     func setUpBoundaryFromSKS() {
         mazeWorld!.enumerateChildNodesWithName("boundary") {
             node, stop in
@@ -144,7 +148,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         }
     }
     
-    //MARK: - Setup Stars
+    func setUpEnemiesFromSKS() {
+        mazeWorld!.enumerateChildNodesWithName("enemy*") {
+            node, stop in
+            
+            if let enemy = node as? SKSpriteNode {
+                self.enemyCount++
+                
+                let newEnemy = Enemy(fromSKSWithImage: enemy.name!)
+                self.mazeWorld!.addChild(newEnemy)
+                newEnemy.position = enemy.position
+                newEnemy.name = enemy.name!
+                
+                self.enemyDictionary.updateValue(newEnemy.position, forKey: newEnemy.name!)
+                
+                enemy.removeFromParent()
+            }
+        }
+    }
+    
     func setUpStarsFromSKS() {
         mazeWorld!.enumerateChildNodesWithName("star") {
             node, stop in
@@ -320,6 +342,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
                     heroLocation = hero!.position
 
                 }
+            } else if type as? String == "Enemy" {
+                enemyCount++
+                
+                let theName:String = attributeDict["name"] as AnyObject? as! String
+                
+                let newEnemy:Enemy = Enemy(theDict: attributeDict)
+                mazeWorld!.addChild(newEnemy)
+                
+                newEnemy.name = theName
+                
+                let location:CGPoint = newEnemy.position
+                
+                enemyDictionary.updateValue(location, forKey: newEnemy.name!)
             }
         }
     }

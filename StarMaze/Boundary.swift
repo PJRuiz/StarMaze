@@ -28,39 +28,40 @@ class Boundary: SKNode {
     init(theDict:Dictionary<NSObject, AnyObject>){
         super.init()
         
-        let isEdgeAsString = theDict["isEdge"] as AnyObject? as! String
+        let isEdgeAsString:String = theDict["isEdge"] as AnyObject? as! String
         
         var isEdge:Bool
         
-        if isEdgeAsString == "true" {
+        if (isEdgeAsString == "true") {
+            
             isEdge = true
         } else {
+            
             isEdge = false
         }
         
+        
         let theX:String = theDict["x"] as AnyObject? as! String
-        let x:Int = theX.toInt( )!
+        let x:Int = theX.toInt()!
+        
         
         let theY:String = theDict["y"] as AnyObject? as! String
-        let y:Int = theY.toInt( )!
+        let y:Int = theY.toInt()!
         
         let theWidth:String = theDict["width"] as AnyObject? as! String
-        let width:Int = theWidth.toInt( )!
+        let width:Int = theWidth.toInt()!
+        
         
         let theHeight:String = theDict["height"] as AnyObject? as! String
-        let height:Int = theHeight.toInt( )!
+        let height:Int = theHeight.toInt()!
         
-        let location = CGPoint(x: x, y: y * -1)
+        let location:CGPoint = CGPoint(x: x, y: y * -1)
+        let size:CGSize = CGSize(width: width, height: height)
         
-        let size = CGSize(width: width, height: height)
+        self.position = CGPoint(x: location.x + (size.width / 2), y: location.y - (size.height / 2))
+        let rect:CGRect = CGRectMake( -(size.width / 2), -(size.height / 2), size.width, size.height)
         
-        self.position = CGPoint(x: location.x + (size.width/2), y: location.y - (size.height/2))
-        
-        let rect = CGRectMake(-(size.width/2), -(size.height/2), size.width, size.height)
-        
-        createBoundary(rect, createAsEdge: isEdge)
-        
-        
+        createBoundary(rect, createAsEdge:isEdge)
     }
     
     func createBoundary (rect: CGRect, createAsEdge:Bool) {

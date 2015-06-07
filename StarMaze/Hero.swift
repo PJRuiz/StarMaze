@@ -77,7 +77,7 @@ class Hero: SKNode {
         self.physicsBody!.categoryBitMask = BodyType.hero.rawValue
         
         // Who is it going to interact with, by default it collides with everything
-        //self.physicsBody!.collisionBitMask = 0
+        self.physicsBody!.collisionBitMask = 0
         
         // Who do you want to be notified if you come in contact with
         self.physicsBody!.contactTestBitMask = BodyType.boundary.rawValue | BodyType.star.rawValue
@@ -85,23 +85,25 @@ class Hero: SKNode {
         
         nodeUp = SKNode()
         addChild(nodeUp!)
-        nodeUp!.position = CGPoint(x: 0, y: buffer)
-        createUpSensorPhysicsBody(whileTravellingUpOrDown: false)
+        nodeUp!.position = CGPoint(x:0, y:buffer)
+        createUpSensorPhysicsBody( whileTravellingUpOrDown: false )
         
         nodeDown = SKNode()
         addChild(nodeDown!)
-        nodeDown!.position = CGPoint(x: 0, y: -buffer)
-        createDownSensorPhysicsBody(whileTravellingUpOrDown: false)
-        
-        nodeLeft = SKNode()
-        addChild(nodeLeft!)
-        nodeLeft!.position = CGPoint(x: buffer, y: 0)
-        createLeftSensorPhysicsBody(whileTravellingLeftOrRight: true)
+        nodeDown!.position = CGPoint(x:0, y: -buffer )
+        createDownSensorPhysicsBody( whileTravellingUpOrDown: false)
         
         nodeRight = SKNode()
         addChild(nodeRight!)
-        nodeRight!.position = CGPoint(x: -buffer, y: 0)
-        createRightSensorPhysicsBody(whileTravellingLeftOrRight: true)
+        nodeRight!.position = CGPoint(x: buffer, y:0 )
+        createRightSensorPhysicsBody( whileTravellingLeftOrRight: true)
+        
+        nodeLeft = SKNode()
+        addChild(nodeLeft!)
+        nodeLeft!.position = CGPoint(x: -buffer, y:0 )
+        createLeftSensorPhysicsBody( whileTravellingLeftOrRight: true)
+        
+
         
         
         
