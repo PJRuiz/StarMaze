@@ -97,6 +97,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         if (useTMXFiles == false) {
             println("setup with SKS")
             setUpBoundaryFromSKS()
+            setUpEdgeFromSKS()
             setUpStarsFromSKS()
         } else {
             parseTMXFileWithName("Maze")
@@ -112,12 +113,31 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
             if let boundary = node as? SKSpriteNode {
                 let rect = CGRect(origin: boundary.position, size: boundary.size)
                 
-                let newBoundary = Boundary(fromSKSwithRect: rect)
+                let newBoundary = Boundary(fromSKSwithRect: rect, isEdge: false)
                 
                 self.mazeWorld!.addChild(newBoundary)
                 newBoundary.position = boundary.position
                 
                 boundary.removeFromParent( )
+                
+            }
+            
+        }
+    }
+    
+    func setUpEdgeFromSKS() {
+        mazeWorld!.enumerateChildNodesWithName("edge") {
+            node, stop in
+            
+            if let edge = node as? SKSpriteNode {
+                let rect = CGRect(origin: edge.position, size: edge.size)
+                
+                let newEdge = Boundary(fromSKSwithRect: rect, isEdge: true)
+                
+                self.mazeWorld!.addChild(newEdge)
+                newEdge.position = edge.position
+                
+                edge.removeFromParent( )
                 
             }
             
@@ -192,6 +212,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         let contactMask = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
         
         switch(contactMask) {
+            case BodyType.boundary.rawValue | BodyType.sensorUp.rawValue:
+                hero!.upSensorContactStart()
+            
+            case BodyType.boundary.rawValue | BodyType.sensorDown.rawValue:
+                hero!.downSensorContactStart()
+            
+            case BodyType.boundary.rawValue | BodyType.sensorLeft.rawValue:
+                hero!.leftSensorContactStart()
+            
+            case BodyType.boundary.rawValue | BodyType.sensorRight.rawValue:
+                hero!.rightSensorContactStart()
+            
+            
+            
             case BodyType.hero.rawValue | BodyType.star.rawValue:
                 if let star = contact.bodyA.node as? Star {
                     star.removeFromParent()
@@ -214,8 +248,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         let contactMask = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
         
         switch(contactMask) {
-        case BodyType.hero.rawValue | BodyType.boundary.rawValue:
-            println("Not touching wall")
+        case BodyType.boundary.rawValue | BodyType.sensorUp.rawValue:
+            hero!.upSensorContactEnd()
+            
+        case BodyType.boundary.rawValue | BodyType.sensorDown.rawValue:
+            hero!.downSensorContactEnd()
+            
+        case BodyType.boundary.rawValue | BodyType.sensorLeft.rawValue:
+            hero!.leftSensorContactEnd()
+            
+        case BodyType.boundary.rawValue | BodyType.sensorRight.rawValue:
+            hero!.rightSensorContactEnd()
+            
+        
         default:
             return
         }
@@ -240,8 +285,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
             let type: AnyObject? = attributeDict["type"]
             
             if (type as? String == "Boundary") {
-                let newBoundary = Boundary(theDict: attributeDict)
+                var tmxDict = attributeDict
+                
+                tmxDict.updateValue("false", forKey: "isEdge")
+                
+                let newBoundary = Boundary(theDict: tmxDict)
                 mazeWorld!.addChild(newBoundary)
+                
+            } else if type as? String == "Edge"{
+                var tmxDict = attributeDict
+                
+                tmxDict.updateValue("true", forKey: "isEdge")
+                
+                let newBoundary = Boundary(theDict: tmxDict)
+                mazeWorld!.addChild(newBoundary)
+                
                 
             } else if (type as? String == "Star") {
                 let newStar = Star(fromTMXFileWithDict: attributeDict)

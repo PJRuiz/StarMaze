@@ -14,7 +14,7 @@ enum Direction {
 }
 
 enum DesiredDirection {
-    case Up, Down, RIght, Left, None
+    case Up, Down, Right, Left, None
 }
 
 
@@ -26,7 +26,7 @@ class Hero: SKNode {
     var currentSpeed: Float = 5
     
     var currentDirection = Direction.Right
-    var desiredDirection = Direction.None
+    var desiredDirection = DesiredDirection.None
     
     var movingAnimation:SKAction?
     
@@ -57,8 +57,6 @@ class Hero: SKNode {
         
         setupAnimation()
         runAnimation()
-        
-        let sizeMultiplier = 1.2
         
         //MARK: Physics
         let largerSize = CGSize(width: objectSprite!.size.width * 1.2 , height: objectSprite!.size.height * 1.2)
@@ -98,12 +96,12 @@ class Hero: SKNode {
         nodeLeft = SKNode()
         addChild(nodeLeft!)
         nodeLeft!.position = CGPoint(x: buffer, y: 0)
-        createRightSensorPhysicsBody(whileTravellingLeftOrRight: true)
+        createLeftSensorPhysicsBody(whileTravellingLeftOrRight: true)
         
         nodeRight = SKNode()
         addChild(nodeRight!)
         nodeRight!.position = CGPoint(x: -buffer, y: 0)
-        createLeftSensorPhysicsBody(whileTravellingLeftOrRight: false)
+        createRightSensorPhysicsBody(whileTravellingLeftOrRight: true)
         
         
         
@@ -139,43 +137,101 @@ class Hero: SKNode {
     
     //MARK: - Directional Movement Logic
     func goUp ( ) {
-        currentDirection = .Up
-        runAnimation()
-        
-        createUpSensorPhysicsBody(whileTravellingUpOrDown: true)
-        createDownSensorPhysicsBody(whileTravellingUpOrDown: true)
-        createLeftSensorPhysicsBody(whileTravellingLeftOrRight: false)
-        createRightSensorPhysicsBody(whileTravellingLeftOrRight: false)
+        if (upBlocked == true) {
+            
+            desiredDirection = DesiredDirection.Up
+            
+        } else {
+            
+            runAnimation()
+            
+            currentDirection = .Up
+            desiredDirection = .None
+            downBlocked = false
+            
+            self.physicsBody?.dynamic = true
+            
+            createUpSensorPhysicsBody(whileTravellingUpOrDown: true)
+            createDownSensorPhysicsBody(whileTravellingUpOrDown: true )
+            createLeftSensorPhysicsBody(whileTravellingLeftOrRight: false )
+            createRightSensorPhysicsBody(whileTravellingLeftOrRight: false )
+            
+        }
     }
     
     func goDown(){
-        currentDirection = .Down
-        runAnimation()
-        
-        createUpSensorPhysicsBody(whileTravellingUpOrDown: true)
-        createDownSensorPhysicsBody(whileTravellingUpOrDown: true)
-        createLeftSensorPhysicsBody(whileTravellingLeftOrRight: false)
-        createRightSensorPhysicsBody(whileTravellingLeftOrRight: false)
+
+        if (downBlocked == true) {
+            
+            desiredDirection = DesiredDirection.Down
+            
+        } else {
+            
+            
+            currentDirection = .Down
+            desiredDirection = .None
+            runAnimation()
+            
+            upBlocked = false
+            
+            self.physicsBody?.dynamic = true
+            
+            createUpSensorPhysicsBody(whileTravellingUpOrDown: true)
+            createDownSensorPhysicsBody(whileTravellingUpOrDown: true )
+            createLeftSensorPhysicsBody(whileTravellingLeftOrRight: false )
+            createRightSensorPhysicsBody(whileTravellingLeftOrRight: false )
+            
+        }
     }
 
     func goRight( ) {
-        currentDirection = .Right
-        runAnimation()
-        
-        createUpSensorPhysicsBody(whileTravellingUpOrDown: false)
-        createDownSensorPhysicsBody(whileTravellingUpOrDown: false)
-        createLeftSensorPhysicsBody(whileTravellingLeftOrRight: true)
-        createRightSensorPhysicsBody(whileTravellingLeftOrRight: true)
+
+        if (rightBlocked == true) {
+            
+            desiredDirection = DesiredDirection.Right
+            
+        } else {
+            
+            
+            currentDirection = .Right
+            desiredDirection = .None
+            runAnimation()
+            
+            leftBlocked = false
+            
+            self.physicsBody?.dynamic = true
+            
+            createUpSensorPhysicsBody(whileTravellingUpOrDown: false)
+            createDownSensorPhysicsBody(whileTravellingUpOrDown: false )
+            createLeftSensorPhysicsBody(whileTravellingLeftOrRight: true )
+            createRightSensorPhysicsBody(whileTravellingLeftOrRight: true )
+            
+        }
+
     }
     
     func goLeft ( ) {
-        currentDirection = .Left
-        runAnimation()
-        
-        createUpSensorPhysicsBody(whileTravellingUpOrDown: false)
-        createDownSensorPhysicsBody(whileTravellingUpOrDown: false)
-        createLeftSensorPhysicsBody(whileTravellingLeftOrRight: true)
-        createRightSensorPhysicsBody(whileTravellingLeftOrRight: true)
+
+        if (leftBlocked == true) {
+            
+            desiredDirection = DesiredDirection.Left
+            
+        } else {
+            
+            currentDirection = .Left
+            desiredDirection = .None
+            runAnimation()
+            
+            rightBlocked = false
+            
+            self.physicsBody?.dynamic = true
+            
+            createUpSensorPhysicsBody(whileTravellingUpOrDown: false)
+            createDownSensorPhysicsBody(whileTravellingUpOrDown: false )
+            createLeftSensorPhysicsBody(whileTravellingLeftOrRight: true )
+            createRightSensorPhysicsBody(whileTravellingLeftOrRight: true )
+            
+        }
     }
     
     
@@ -211,90 +267,230 @@ class Hero: SKNode {
     
     //MARK: - Physics Sensors
     
-    func createUpSensorPhysicsBody (#whileTravellingUpOrDown: Bool) {
-       var size = CGSizeZero
+    func createUpSensorPhysicsBody(#whileTravellingUpOrDown:Bool) {
         
-        if whileTravellingUpOrDown == true {
-            size = CGSize(width: 32, height: 9)
+        var size:CGSize = CGSizeZero
+        
+        if (whileTravellingUpOrDown == true) {
+            
+            size = CGSize(width: 32, height: 4)
         } else {
+            
             size = CGSize(width: 32.4, height: 36)
         }
         
-        nodeUp!.physicsBody = nil
-        let bodyUp = SKPhysicsBody(rectangleOfSize: size)
         
+        nodeUp!.physicsBody = nil // get rid of any existing physics body
+        let bodyUp:SKPhysicsBody = SKPhysicsBody(rectangleOfSize: size)
         nodeUp!.physicsBody = bodyUp
-        nodeUp!.physicsBody!.categoryBitMask = BodyType.sensorUp.rawValue
-        nodeUp!.physicsBody!.collisionBitMask = 0
-        nodeUp!.physicsBody!.contactTestBitMask = BodyType.boundary.rawValue
-        nodeUp!.physicsBody!.pinned = true
-        nodeUp!.physicsBody!.allowsRotation = false
+        nodeUp!.physicsBody?.categoryBitMask = BodyType.sensorUp.rawValue
+        nodeUp!.physicsBody?.collisionBitMask = 0
+        nodeUp!.physicsBody?.contactTestBitMask = BodyType.boundary.rawValue
+        nodeUp!.physicsBody?.pinned = true
+        nodeUp!.physicsBody?.allowsRotation = false
+        
         
     }
     
-    func createDownSensorPhysicsBody (#whileTravellingUpOrDown: Bool) {
-        var size = CGSizeZero
+    func createDownSensorPhysicsBody(#whileTravellingUpOrDown:Bool){
         
-        if whileTravellingUpOrDown == true {
-            size = CGSize(width: 32, height: 9)
+        var size:CGSize = CGSizeZero
+        
+        if (whileTravellingUpOrDown == true) {
+            
+            size = CGSize(width: 32, height: 4)
         } else {
-            size = CGSize(width: 32.4, height: 36)
+            
+            size = CGSize(width: 32.4 , height:36 )
         }
         
-        nodeDown!.physicsBody = nil
-        let bodyDown = SKPhysicsBody(rectangleOfSize: size)
+        
+        
+        nodeDown?.physicsBody = nil
+        let bodyDown:SKPhysicsBody = SKPhysicsBody(rectangleOfSize: size )
+        
+        
         
         nodeDown!.physicsBody = bodyDown
-        nodeDown!.physicsBody!.categoryBitMask = BodyType.sensorDown.rawValue
-        nodeDown!.physicsBody!.collisionBitMask = 0
-        nodeDown!.physicsBody!.contactTestBitMask = BodyType.boundary.rawValue
+        nodeDown!.physicsBody?.categoryBitMask = BodyType.sensorDown.rawValue
+        nodeDown!.physicsBody?.collisionBitMask = 0
+        nodeDown!.physicsBody?.contactTestBitMask = BodyType.boundary.rawValue
         nodeDown!.physicsBody!.pinned = true
         nodeDown!.physicsBody!.allowsRotation = false
         
-    }
-
-    func createLeftSensorPhysicsBody (#whileTravellingLeftOrRight: Bool) {
-        var size = CGSizeZero
-        
-        if whileTravellingLeftOrRight == true {
-            size = CGSize(width: 9, height: 32)
-        } else {
-            size = CGSize(width: 36, height: 32.4)
-        }
-        
-        nodeLeft!.physicsBody = nil
-        let bodyLeft = SKPhysicsBody(rectangleOfSize: size)
-        
-        nodeLeft!.physicsBody = bodyLeft
-        nodeLeft!.physicsBody!.categoryBitMask = BodyType.sensorLeft.rawValue
-        nodeLeft!.physicsBody!.collisionBitMask = 0
-        nodeLeft!.physicsBody!.contactTestBitMask = BodyType.boundary.rawValue
-        nodeLeft!.physicsBody!.pinned = true
-        nodeLeft!.physicsBody!.allowsRotation = false
         
     }
     
-    func createRightSensorPhysicsBody (#whileTravellingLeftOrRight: Bool) {
-        var size = CGSizeZero
+    func createLeftSensorPhysicsBody( #whileTravellingLeftOrRight:Bool){
         
-        if whileTravellingLeftOrRight == true {
-            size = CGSize(width: 9, height: 32)
+        var size:CGSize = CGSizeZero
+        
+        if (whileTravellingLeftOrRight == true) {
+            
+            size = CGSize(width: 4, height: 32)
         } else {
+            
             size = CGSize(width: 36, height: 32.4)
         }
         
-        nodeRight!.physicsBody = nil
-        let bodyRight = SKPhysicsBody(rectangleOfSize: size)
         
+        
+        nodeLeft?.physicsBody = nil
+        let bodyLeft:SKPhysicsBody = SKPhysicsBody(rectangleOfSize: size )
+        nodeLeft!.physicsBody = bodyLeft
+        nodeLeft!.physicsBody?.categoryBitMask = BodyType.sensorLeft.rawValue
+        nodeLeft!.physicsBody?.collisionBitMask = 0
+        nodeLeft!.physicsBody?.contactTestBitMask = BodyType.boundary.rawValue
+        nodeLeft!.physicsBody!.pinned = true
+        nodeLeft!.physicsBody!.allowsRotation = false
+        
+        
+        
+    }
+    
+    func createRightSensorPhysicsBody( #whileTravellingLeftOrRight:Bool){
+        
+        
+        var size:CGSize = CGSizeZero
+        
+        if (whileTravellingLeftOrRight == true) {
+            
+            size = CGSize(width: 4, height: 32)
+        } else {
+            
+            size = CGSize(width: 36, height: 32.4)
+        }
+        
+        
+        
+        
+        nodeRight?.physicsBody = nil
+        let bodyRight:SKPhysicsBody = SKPhysicsBody(rectangleOfSize: size )
         nodeRight!.physicsBody = bodyRight
-        nodeRight!.physicsBody!.categoryBitMask = BodyType.sensorRight.rawValue
-        nodeRight!.physicsBody!.collisionBitMask = 0
-        nodeRight!.physicsBody!.contactTestBitMask = BodyType.boundary.rawValue
+        nodeRight!.physicsBody?.categoryBitMask = BodyType.sensorRight.rawValue
+        nodeRight!.physicsBody?.collisionBitMask = 0
+        nodeRight!.physicsBody?.contactTestBitMask = BodyType.boundary.rawValue
         nodeRight!.physicsBody!.pinned = true
         nodeRight!.physicsBody!.allowsRotation = false
         
+        
     }
+    
+    
+    //MARK: - Functions for Sensor Contacts
+    //MARK: ContactStart
+    func upSensorContactStart() {
+        
+        upBlocked = true
+        
+        if (currentDirection == Direction.Up) {
+            
+            currentDirection = Direction.None
+            self.physicsBody?.dynamic = false
+            stopAnimation()
+        }
+        
+        
+    }
+    
+    func downSensorContactStart() {
+        
+        
+        downBlocked = true
+        
+        if (currentDirection == Direction.Down) {
+            
+            currentDirection = Direction.None
+            self.physicsBody?.dynamic = false
+            stopAnimation()
+        }
+        
+    }
+    
+    func leftSensorContactStart() {
+        
+        
+        leftBlocked = true
+        
+        if (currentDirection == Direction.Left) {
+            
+            currentDirection = Direction.None
+            self.physicsBody?.dynamic = false
+            stopAnimation()
+        }
+        
+    }
+    
+    func rightSensorContactStart() {
+        
+        
+        rightBlocked = true
+        
+        if (currentDirection == Direction.Right) {
+            
+            currentDirection = Direction.None
+            self.physicsBody?.dynamic = false
+            stopAnimation()
+        }
+        
+    }
+    
+    //MARK: ContactEnd
+    func upSensorContactEnd() {
+        
+        upBlocked = false
+        
+        if (desiredDirection == DesiredDirection.Up) {
+            
+            goUp()
+            desiredDirection == DesiredDirection.None
+        }
+        
+        
+    }
+    
+    func downSensorContactEnd() {
+        
+        
+        downBlocked = false
+        
+        if (desiredDirection == DesiredDirection.Down) {
+            
+            goDown()
+            desiredDirection == DesiredDirection.None
+        }
+        
+        
+    }
+    
+    func leftSensorContactEnd() {
+        
+        
+        
+        
+        leftBlocked = false
+        
+        if (desiredDirection == DesiredDirection.Left) {
+            
+            goLeft()
+            desiredDirection == DesiredDirection.None
+        }
+        
+        
+    }
+    
+    func rightSensorContactEnd() {
 
+        rightBlocked = false
+        
+        if (desiredDirection == DesiredDirection.Right) {
+            
+            goRight ()
+            desiredDirection == DesiredDirection.None
+        }
+        
+        
+    }
     
     
 }
