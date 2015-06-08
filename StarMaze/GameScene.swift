@@ -74,9 +74,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         let path = NSBundle.mainBundle().pathForResource("GameData", ofType: "plist")
         let dict = NSDictionary(contentsOfFile: path!)!
         let heroDict: AnyObject = dict.objectForKey("HeroSettings")!
+        let gameDict: AnyObject = dict.objectForKey("GameSettings")!
+        
+        livesLeft = 1
+        
         
         self.backgroundColor = SKColor.blackColor()
-        view.showsPhysics = false
+        view.showsPhysics = gameDict["ShowPhysics"] as AnyObject? as! Bool
         
         self.physicsWorld.gravity = CGVector(dx: 0, dy: 0)
         
@@ -86,6 +90,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         
         //MARK: Play Background Music
         playBackgroundMusic("HungryWolf.mp3")
+        
+        
+        useTMXFiles = gameDict["UseTMXFile"] as AnyObject? as! Bool
         
         if (useTMXFiles == true) {
             println("setup with tmx")
@@ -102,8 +109,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
 
         }
 
-
-        
         hero = Hero(theDict: heroDict as! Dictionary)
         hero!.position = heroLocation
         

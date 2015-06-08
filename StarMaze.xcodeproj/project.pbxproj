@@ -24,6 +24,7 @@
 		958F34241B25488B00A34098 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 958F34231B25488B00A34098 /* AVFoundation.framework */; };
 		958F34261B2549DD00A34098 /* HungryWolf.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 958F34251B2549DD00A34098 /* HungryWolf.mp3 */; };
 		958F34291B25652B00A34098 /* GameData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 958F34281B25652B00A34098 /* GameData.plist */; };
+		958F342B1B257D6400A34098 /* GameData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 958F342A1B257D6400A34098 /* GameData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +59,7 @@
 		958F34231B25488B00A34098 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		958F34251B2549DD00A34098 /* HungryWolf.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = HungryWolf.mp3; sourceTree = "<group>"; };
 		958F34281B25652B00A34098 /* GameData.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = GameData.plist; sourceTree = "<group>"; };
+		958F342A1B257D6400A34098 /* GameData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +105,7 @@
 				958F33F21B1FEB1E00A34098 /* AppDelegate.swift */,
 				958F33F41B1FEB1E00A34098 /* GameScene.sks */,
 				958F33F61B1FEB1E00A34098 /* GameScene.swift */,
+				958F342A1B257D6400A34098 /* GameData.swift */,
 				958F34281B25652B00A34098 /* GameData.plist */,
 				958F34201B21E06F00A34098 /* SKNode Classes */,
 				958F33F81B1FEB1E00A34098 /* GameViewController.swift */,
@@ -273,6 +276,7 @@
 				958F33F91B1FEB1E00A34098 /* GameViewController.swift in Sources */,
 				958F33F31B1FEB1E00A34098 /* AppDelegate.swift in Sources */,
 				958F341F1B21E04700A34098 /* Star.swift in Sources */,
+				958F342B1B257D6400A34098 /* GameData.swift in Sources */,
 				958F34191B20005400A34098 /* Hero.swift in Sources */,
 				958F341B1B2166A300A34098 /* Boundary.swift in Sources */,
 			);

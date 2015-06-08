@@ -69,7 +69,6 @@ class Hero: SKNode {
         }
         
         
-        
         //MARK: Physics
         let largerSize = CGSize(width: objectSprite!.size.width * 1.2 , height: objectSprite!.size.height * 1.2)
 

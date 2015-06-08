@@ -20,5 +20,16 @@
 			<string>moving002</string>
 		</array>
 	</dict>
+	<key>GameSettings</key>
+	<dict>
+		<key>UseTMXFile</key>
+		<true/>
+		<key>ShowPhysics</key>
+		<false/>
+		<key>ParallaxOffset</key>
+		<string>{ 0.7,0.7 }</string>
+	</dict>
+	<key>LevelSettings</key>
+	<array/>
 </dict>
 </plist>
