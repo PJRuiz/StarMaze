@@ -8,6 +8,7 @@
 
 //MARK: - Import Frameworks
 import SpriteKit
+import AVFoundation
 
 enum BodyType:UInt32 {
     case hero = 1
@@ -38,18 +39,47 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
     
     var useTMXFiles: Bool = true
     
+    //MARK: - Music Player
+    
+    var backgroundMusicPlayer: AVAudioPlayer!
+    
+    func playBackgroundMusic(filename: String) {
+        let url = NSBundle.mainBundle().URLForResource(
+            filename, withExtension: nil)
+        if (url == nil) {
+            println("Could not find file: \(filename)")
+            return
+        }
+        
+        var error: NSError? = nil
+        backgroundMusicPlayer =
+            AVAudioPlayer(contentsOfURL: url, error: &error)
+        if backgroundMusicPlayer == nil {
+            println("Could not create audio player: \(error!)")
+            return
+        }
+        
+        backgroundMusicPlayer.numberOfLoops = -1
+        backgroundMusicPlayer.prepareToPlay()
+        backgroundMusicPlayer.play()
+    }
+
+    
     
     //MARK: - Initialize View
     override func didMoveToView(view: SKView) {
         
         self.backgroundColor = SKColor.blackColor()
-        view.showsPhysics = true
+        view.showsPhysics = false
         
         self.physicsWorld.gravity = CGVector(dx: 0, dy: 0)
         
         physicsWorld.contactDelegate = self
         
         self.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        
+        //MARK: Play Background Music
+        playBackgroundMusic("HungryWolf.mp3")
         
         if (useTMXFiles == true) {
             println("setup with tmx")
@@ -107,6 +137,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
             parseTMXFileWithName("Maze")
             mazeWorld!.position = CGPoint(x: mazeWorld!.position.x, y: mazeWorld!.position.y + 800)
         }
+        
+        tellEnemiesWhereHeroIs()
+        
     }
     
     //MARK: - Setup from SKS
@@ -213,7 +246,35 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
    
     //MARK: - Update Cycle
     override func update(currentTime: CFTimeInterval) {
-        hero!.update()
+        if heroIsDead == false {
+            hero!.update()
+            
+            mazeWorld!.enumerateChildNodesWithName("enemy*") {
+                node, stop in
+                
+                if let enemy = node as? Enemy {
+                    
+                    if enemy.isStuck == true {
+                        enemy.heroLocationIs = self.returnTheDirection(enemy)
+                        enemy.decideDirection()
+                        enemy.isStuck = false
+                    }
+                    enemy.update()
+                }
+            }
+        } else {
+            // HERO IS DEAD
+            
+            resetEnemies()
+            hero?.rightBlocked = false
+            hero!.position = heroLocation
+            heroIsDead = false
+            hero!.currentDirection = .Right
+            hero!.desiredDirection = .None
+            hero!.goRight()
+            hero!.runAnimation()
+
+        }
     }
     
     override func didSimulatePhysics() {
@@ -234,6 +295,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         let contactMask = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
         
         switch(contactMask) {
+            case BodyType.enemy.rawValue | BodyType.enemy.rawValue:
+                if let enemy1 = contact.bodyA.node as? Enemy {
+                    enemy1.bumped()
+                } else if let enemy2 = contact.bodyB.node as? Enemy {
+                    enemy2.bumped()
+                }
+            
+            case BodyType.hero.rawValue | BodyType.enemy.rawValue:
+                reloadLevel()
+            
             case BodyType.boundary.rawValue | BodyType.sensorUp.rawValue:
                 hero!.upSensorContactStart()
             
@@ -358,6 +429,64 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
             }
         }
     }
+    
+      //MARK: - Gameplay AI
+    
+    func tellEnemiesWhereHeroIs () {
+        // Refresh location every 5 seconds
+        let enemyAction = SKAction.waitForDuration(5)
+        self.runAction(enemyAction, completion: {
+            self.tellEnemiesWhereHeroIs()
+        })
+        
+        mazeWorld!.enumerateChildNodesWithName("enemy*") {
+            node, stop in
+            
+            if let enemy = node as? Enemy {
+                
+               enemy.heroLocationIs = self.returnTheDirection(enemy)
+            }
+        }
+    }
+
+    
+    func returnTheDirection(enemy:Enemy) -> HeroIs {
+        
+        if (self.hero!.position.x < enemy.position.x && self.hero!.position.y < enemy.position.y) {
+            
+            return HeroIs.Southwest
+            
+        } else if (self.hero!.position.x > enemy.position.x && self.hero!.position.y < enemy.position.y) {
+            
+            return HeroIs.Southeast
+            
+        } else if (self.hero!.position.x < enemy.position.x && self.hero!.position.y >  enemy.position.y) {
+            
+            return HeroIs.Northwest
+            
+        } else if (self.hero!.position.x > enemy.position.x && self.hero!.position.y >  enemy.position.y) {
+            
+            return HeroIs.Northeast
+            
+        } else {
+            
+            return HeroIs.Northeast
+        }
+        
+    }
+    
+    //MARK: - Reload Level
+    
+    func reloadLevel() {
+        heroIsDead = true
+    }
+    
+    func resetEnemies() {
+        for (name, location) in enemyDictionary {
+            mazeWorld!.childNodeWithName(name)?.position = location
+        }
+    }
+
     
     //MARK: - Final Closure
 }

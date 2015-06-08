@@ -457,19 +457,12 @@ class Hero: SKNode {
         downBlocked = false
         
         if (desiredDirection == DesiredDirection.Down) {
-            
             goDown()
             desiredDirection == DesiredDirection.None
         }
-        
-        
     }
     
     func leftSensorContactEnd() {
-        
-        
-        
-        
         leftBlocked = false
         
         if (desiredDirection == DesiredDirection.Left) {

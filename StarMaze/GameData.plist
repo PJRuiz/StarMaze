@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>HeroSettings</key>
+	<dict>
+		<key>HeroImage</key>
+		<string>hero</string>
+		<key>BodyShape</key>
+		<string>square</string>
+		<key>MovingAtlasFile</key>
+		<string>moving</string>
+		<key>MovingFrames</key>
+		<array>
+			<string>moving001</string>
+			<string>moving002</string>
+			<string>moving003</string>
+			<string>moving004</string>
+			<string>moving003</string>
+			<string>moving002</string>
+		</array>
+	</dict>
+</dict>
+</plist>
