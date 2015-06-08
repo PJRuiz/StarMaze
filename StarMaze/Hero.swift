@@ -49,18 +49,40 @@ class Hero: SKNode {
         fatalError("init(coder): has not been implemented")
     }
     
-    override init( ) {
+    init(theDict: [String: AnyObject]) {
         super.init( )
         
-        objectSprite = SKSpriteNode(imageNamed: "hero")
+        let image = theDict["HeroImage"] as AnyObject? as! String
+        
+        objectSprite = SKSpriteNode(imageNamed: image)
         self.addChild(objectSprite!)
         
-        setupAnimation()
-        runAnimation()
+        if let atlasName = theDict["MovingAtlasFile"] as AnyObject? as? String {
+            let frameArray: AnyObject = theDict["MovingFrames"]!
+            if let framesAsNSArray = frameArray as? NSArray {
+                setupAnimationWithArray(framesAsNSArray, andAtlasNamed: atlasName)
+                runAnimation()
+            }
+        } else {
+            setupAnimation()
+            runAnimation()
+        }
+        
+        
         
         //MARK: Physics
         let largerSize = CGSize(width: objectSprite!.size.width * 1.2 , height: objectSprite!.size.height * 1.2)
-        self.physicsBody = SKPhysicsBody(rectangleOfSize: largerSize)
+
+        
+        let bodyShape = theDict["BodyShape"] as AnyObject? as! String
+        
+        if bodyShape == "circle" {
+            self.physicsBody = SKPhysicsBody(circleOfRadius: objectSprite!.size.width/2)
+        } else {
+            self.physicsBody = SKPhysicsBody(rectangleOfSize: largerSize)
+        }
+        
+        
         // Frictionless
         self.physicsBody!.friction = 0
         // Kees the object within boundaries
@@ -240,7 +262,6 @@ class Hero: SKNode {
     //MARK: - Animations
     
     func setupAnimation () {
-        //TODO: Implementation
         let atlas = SKTextureAtlas(named: "moving")
         let array = ["moving0001", "moving0002", "moving0003", "moving0004", "moving0003", "moving0002"]
         
@@ -248,6 +269,20 @@ class Hero: SKNode {
         
         for (var i = 0; i < array.count; i++) {
             let texture = atlas.textureNamed(array[i])
+            atlasTextures.insert(texture, atIndex: i)
+        }
+        
+        let atlasAnimation = SKAction.animateWithTextures(atlasTextures, timePerFrame: 1.0/30, resize: true, restore: false)
+        movingAnimation = SKAction.repeatActionForever(atlasAnimation)
+    }
+    
+    func setupAnimationWithArray (theArray: NSArray, andAtlasNamed theAtlas: String) {
+        let atlas = SKTextureAtlas(named: theAtlas)
+        
+        var atlasTextures:[SKTexture] = [ ]
+        
+        for (var i = 0; i < theArray.count; i++) {
+            let texture = atlas.textureNamed(theArray[i] as! String)
             atlasTextures.insert(texture, atIndex: i)
         }
         

@@ -69,6 +69,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
     //MARK: - Initialize View
     override func didMoveToView(view: SKView) {
         
+        //MARK: Parse Property List
+        
+        let path = NSBundle.mainBundle().pathForResource("GameData", ofType: "plist")
+        let dict = NSDictionary(contentsOfFile: path!)!
+        let heroDict: AnyObject = dict.objectForKey("HeroSettings")!
+        
         self.backgroundColor = SKColor.blackColor()
         view.showsPhysics = false
         
@@ -98,7 +104,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
 
 
         
-        hero = Hero()
+        hero = Hero(theDict: heroDict as! Dictionary)
         hero!.position = heroLocation
         
         mazeWorld!.addChild(hero!)
