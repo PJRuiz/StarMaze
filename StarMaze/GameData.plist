@@ -30,6 +30,35 @@
 		<string>{ 0.7,0.7 }</string>
 	</dict>
 	<key>LevelSettings</key>
-	<array/>
+	<array>
+		<dict>
+			<key>TMXFile</key>
+			<string>Maze</string>
+			<key>NextSKSFile</key>
+			<string>GameScene2</string>
+			<key>Speed</key>
+			<integer>5</integer>
+			<key>EnemySpeed</key>
+			<integer>4</integer>
+			<key>EnemyLogic</key>
+			<integer>5</integer>
+			<key>Background</key>
+			<string>star_field</string>
+		</dict>
+		<dict>
+			<key>TMXFile</key>
+			<string>Maze</string>
+			<key>NextSKSFile</key>
+			<string>GameScene2</string>
+			<key>Speed</key>
+			<integer>5</integer>
+			<key>EnemySpeed</key>
+			<integer>4</integer>
+			<key>EnemyLogic</key>
+			<integer>5</integer>
+			<key>Background</key>
+			<string>star_field</string>
+		</dict>
+	</array>
 </dict>
 </plist>

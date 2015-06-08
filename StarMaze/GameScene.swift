@@ -26,6 +26,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
     
     //MARK: - Instance Variables
     var currentSpeed: Float = 5
+    var enemySpeed:Float = 4
+    
     var heroLocation: CGPoint = CGPointZero
     var mazeWorld: SKNode?
     var hero:Hero?
@@ -36,8 +38,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
     
     var enemyCount = 0
     var enemyDictionary:[String : CGPoint] = [:]
+    var enemyLogic:Double = 5
     
     var useTMXFiles: Bool = true
+    
+    var currentTMXFile:String?
+    
+    var nextSKSFile:String?
+    
+    var bgImage:String?
     
     //MARK: - Music Player
     
@@ -75,6 +84,36 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         let dict = NSDictionary(contentsOfFile: path!)!
         let heroDict: AnyObject = dict.objectForKey("HeroSettings")!
         let gameDict: AnyObject = dict.objectForKey("GameSettings")!
+        let levelArray: AnyObject = dict.objectForKey("LevelSettings")!
+        
+        if let levelNSArray: NSArray = levelArray as? NSArray {
+            var levelDict:AnyObject = levelNSArray[currentLevel]
+            
+            if let tmxFile = levelDict["TMXFile"] as AnyObject? as? String {
+                currentTMXFile = tmxFile
+            }
+            
+            if let sksFile = levelDict["NextSKSFile"] as AnyObject? as? String {
+                nextSKSFile = sksFile
+            }
+            
+            if let speed = levelDict["Speed"] as AnyObject? as? Float {
+                currentSpeed = speed
+            }
+            
+            if let espeed = levelDict["EnemySpeed"] as AnyObject? as? Float {
+                enemySpeed = espeed
+            }
+            
+            if let elogic = levelDict["EnemyLogic"] as AnyObject? as? Double {
+                enemyLogic = elogic
+            }
+            
+            if levelDict["Background"] != nil {
+                bgImage = levelDict["Background"] as AnyObject? as? String
+            }
+            
+        }
         
         livesLeft = 1
         
@@ -145,7 +184,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
             setUpStarsFromSKS()
             setUpEnemiesFromSKS()
         } else {
-            parseTMXFileWithName("Maze")
+            parseTMXFileWithName(currentTMXFile!)
             mazeWorld!.position = CGPoint(x: mazeWorld!.position.x, y: mazeWorld!.position.y + 800)
         }
         
@@ -203,6 +242,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
                 self.mazeWorld!.addChild(newEnemy)
                 newEnemy.position = enemy.position
                 newEnemy.name = enemy.name!
+                newEnemy.enemySpeed = self.enemySpeed
                 
                 self.enemyDictionary.updateValue(newEnemy.position, forKey: newEnemy.name!)
                 
@@ -340,7 +380,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
                 starsAcquired++
             
                 if starsAcquired == starsTotal {
-                    println("got all the stars")
+                    loadNextLevel()
                 }
             
         default:
@@ -433,6 +473,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
                 mazeWorld!.addChild(newEnemy)
                 
                 newEnemy.name = theName
+                newEnemy.enemySpeed = enemySpeed
                 
                 let location:CGPoint = newEnemy.position
                 
@@ -445,7 +486,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
     
     func tellEnemiesWhereHeroIs () {
         // Refresh location every 5 seconds
-        let enemyAction = SKAction.waitForDuration(5)
+        let enemyAction = SKAction.waitForDuration(enemyLogic)
         self.runAction(enemyAction, completion: {
             self.tellEnemiesWhereHeroIs()
         })
@@ -489,13 +530,74 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
     //MARK: - Reload Level
     
     func reloadLevel() {
+        loseLife()
         heroIsDead = true
+    }
+    
+    func loseLife() {
+        livesLeft = livesLeft - 1
+        if livesLeft == 0 {
+            //TODO: Game Over Screen
+            let scaleAction = SKAction.scaleTo(0.2,duration: 3)
+            let fadeAction = SKAction.fadeAlphaTo(0, duration: 3)
+            let group = SKAction.group( [scaleAction, fadeAction])
+            
+            mazeWorld!.runAction(group, completion: {
+                self.resetGame()
+            })
+        } else {
+            //TODO: Update Text for Lives Label
+            
+        }
     }
     
     func resetEnemies() {
         for (name, location) in enemyDictionary {
             mazeWorld!.childNodeWithName(name)?.position = location
         }
+    }
+    
+    func resetGame() {
+        livesLeft = 3
+        currentLevel = 0
+        
+        if useTMXFiles == true {
+            loadNextTMXLevel()
+        } else {
+            currentSKSFile = firstSKSFile
+            
+            var scene = GameScene.unarchiveFromFile(currentSKSFile) as? GameScene
+            scene!.scaleMode = .AspectFill
+            
+            self.view?.presentScene(scene, transition: SKTransition.fadeWithDuration(2))
+        }
+    }
+    
+    func loadNextLevel() {
+        
+        currentLevel++
+        
+        if useTMXFiles == true {
+            loadNextTMXLevel()
+        } else {
+            loadNextSKSLevel()
+        }
+    }
+    
+    func loadNextTMXLevel() {
+        var scene:GameScene = GameScene(size: self.size)
+        scene.scaleMode = .AspectFill
+        
+        self.view?.presentScene(scene, transition: SKTransition.fadeWithDuration(2))
+    }
+    
+    func loadNextSKSLevel() {
+        currentSKSFile = nextSKSFile!
+        var scene = GameScene.unarchiveFromFile(currentSKSFile) as? GameScene
+        scene!.scaleMode = .AspectFill
+        
+        self.view?.presentScene(scene, transition: SKTransition.fadeWithDuration(2))
+        
     }
 
     
