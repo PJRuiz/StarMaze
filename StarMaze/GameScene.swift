@@ -48,6 +48,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
     
     var bgImage:String?
     
+    var gameLabel:SKLabelNode?
+    
     //MARK: - Music Player
     
     var backgroundMusicPlayer: AVAudioPlayer!
@@ -72,6 +74,52 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         backgroundMusicPlayer.prepareToPlay()
         backgroundMusicPlayer.play()
     }
+    
+     var bgSoundPlayer:AVAudioPlayer?
+    
+    func playBackgroundSound(name:String) {
+        
+        
+        if (bgSoundPlayer != nil) {
+            
+            bgSoundPlayer!.stop()
+            bgSoundPlayer = nil
+            
+        }
+        
+        
+        let fileURL:NSURL = NSBundle.mainBundle().URLForResource( name , withExtension: "mp3")!
+        
+        bgSoundPlayer = AVAudioPlayer(contentsOfURL: fileURL, error: nil)
+        
+        
+        bgSoundPlayer!.volume = 0.5  //half volume
+        bgSoundPlayer!.numberOfLoops = -1
+        bgSoundPlayer!.prepareToPlay()
+        bgSoundPlayer!.play()
+        
+        
+    }
+
+    
+    //MARK: - SKLabels
+    
+    func createLabel() {
+        gameLabel = SKLabelNode(fontNamed: "BM germar")
+        gameLabel!.horizontalAlignmentMode = .Left
+        gameLabel!.verticalAlignmentMode = .Center
+        gameLabel!.fontColor = SKColor.whiteColor()
+        gameLabel!.text = "Lives: \(livesLeft)"
+        addChild(gameLabel!)
+        
+        if UIDevice.currentDevice().userInterfaceIdiom == .Phone {
+            gameLabel!.position = CGPoint(x: -(self.size.width / 2.3), y: -(self.size.height / 3))
+        }else if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
+            gameLabel!.position = CGPoint(x: -(self.size.width / 2.3), y: -(self.size.height / 2.3))
+        } else {
+            gameLabel!.position = CGPoint(x: -(self.size.width / 2.3), y: -(self.size.height / 3))
+        }
+    }
 
     
     
@@ -82,35 +130,54 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         
         let path = NSBundle.mainBundle().pathForResource("GameData", ofType: "plist")
         let dict = NSDictionary(contentsOfFile: path!)!
-        let heroDict: AnyObject = dict.objectForKey("HeroSettings")!
-        let gameDict: AnyObject = dict.objectForKey("GameSettings")!
+        let heroDict = dict.objectForKey("HeroSettings")! as! NSDictionary
+        let gameDict = dict.objectForKey("GameSettings")! as! NSDictionary
         let levelArray: AnyObject = dict.objectForKey("LevelSettings")!
         
-        if let levelNSArray: NSArray = levelArray as? NSArray {
-            var levelDict:AnyObject = levelNSArray[currentLevel]
+        if let levelNSArray:NSArray = levelArray as? NSArray{
             
-            if let tmxFile = levelDict["TMXFile"] as AnyObject? as? String {
+            //println(levelNSArray)
+            
+            var levelDict:NSDictionary = levelNSArray[currentLevel] as! NSDictionary
+            
+            if let tmxFile = levelDict["TMXFile"] as? String {
+                
                 currentTMXFile = tmxFile
+                println("specified a TMX file for this level ")
+                println(currentTMXFile)
             }
             
-            if let sksFile = levelDict["NextSKSFile"] as AnyObject? as? String {
+            if let sksFile = levelDict["NextSKSFile"] as? String {
+                
                 nextSKSFile = sksFile
+                println("specified a next SKS file if this level is passed ")
             }
             
-            if let speed = levelDict["Speed"] as AnyObject? as? Float {
+            if let speed = levelDict["Speed"] as? Float  {
+                
                 currentSpeed = speed
+                println( currentSpeed )
             }
-            
-            if let espeed = levelDict["EnemySpeed"] as AnyObject? as? Float {
+            if let espeed = levelDict["EnemySpeed"] as? Float  {
+                
                 enemySpeed = espeed
+                println( enemySpeed )
             }
             
-            if let elogic = levelDict["EnemyLogic"] as AnyObject? as? Double {
+            if let elogic = levelDict["EnemyLogic"] as? Double   {
+                
                 enemyLogic = elogic
+                println( enemyLogic )
             }
             
-            if levelDict["Background"] != nil {
-                bgImage = levelDict["Background"] as AnyObject? as? String
+            if let bg = levelDict["Background"] as? String    {
+                
+                bgImage = bg
+            }
+            
+            if let musicFile = levelDict["Music"] as? String    {
+                
+                playBackgroundSound(musicFile)
             }
             
         }
@@ -119,7 +186,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         
         
         self.backgroundColor = SKColor.blackColor()
-        view.showsPhysics = gameDict["ShowPhysics"] as AnyObject? as! Bool
+        view.showsPhysics = gameDict["ShowPhysics"] as! Bool
         
         self.physicsWorld.gravity = CGVector(dx: 0, dy: 0)
         
@@ -131,8 +198,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         playBackgroundMusic("HungryWolf.mp3")
         
         
-        useTMXFiles = gameDict["UseTMXFile"] as AnyObject? as! Bool
-        
+        useTMXFiles = gameDict["UseTMXFile"] as! Bool
+
         if (useTMXFiles == true) {
             println("setup with tmx")
             
@@ -189,6 +256,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         }
         
         tellEnemiesWhereHeroIs()
+        createLabel()
         
     }
     
@@ -538,6 +606,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         livesLeft = livesLeft - 1
         if livesLeft == 0 {
             //TODO: Game Over Screen
+            
+            gameLabel!.text = "Game Over"
+            gameLabel!.position = CGPointZero
+            gameLabel!.horizontalAlignmentMode = .Center
+            
             let scaleAction = SKAction.scaleTo(0.2,duration: 3)
             let fadeAction = SKAction.fadeAlphaTo(0, duration: 3)
             let group = SKAction.group( [scaleAction, fadeAction])
@@ -547,7 +620,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
             })
         } else {
             //TODO: Update Text for Lives Label
-            
+            gameLabel!.text = "Lives: \(livesLeft)"
         }
     }
     
@@ -560,6 +633,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
     func resetGame() {
         livesLeft = 3
         currentLevel = 0
+        
+        if (bgSoundPlayer != nil) {
+            
+            bgSoundPlayer!.stop()
+            bgSoundPlayer = nil
+            
+        }
         
         if useTMXFiles == true {
             loadNextTMXLevel()
@@ -576,6 +656,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
     func loadNextLevel() {
         
         currentLevel++
+        
+        if (bgSoundPlayer != nil) {
+            
+            bgSoundPlayer!.stop()
+            bgSoundPlayer = nil
+            
+        }
         
         if useTMXFiles == true {
             loadNextTMXLevel()

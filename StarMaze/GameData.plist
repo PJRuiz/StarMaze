@@ -12,12 +12,12 @@
 		<string>moving</string>
 		<key>MovingFrames</key>
 		<array>
-			<string>moving001</string>
-			<string>moving002</string>
-			<string>moving003</string>
-			<string>moving004</string>
-			<string>moving003</string>
-			<string>moving002</string>
+			<string>moving0001</string>
+			<string>moving0002</string>
+			<string>moving0003</string>
+			<string>moving0004</string>
+			<string>moving0003</string>
+			<string>moving0002</string>
 		</array>
 	</dict>
 	<key>GameSettings</key>
@@ -27,7 +27,9 @@
 		<key>ShowPhysics</key>
 		<false/>
 		<key>ParallaxOffset</key>
-		<string>{ 0.7,0.7 }</string>
+		<string>{ 0.7, 0.8 }</string>
+		<key>Gravity</key>
+		<string>{ 0.0, 0.0 }</string>
 	</dict>
 	<key>LevelSettings</key>
 	<array>
@@ -44,6 +46,8 @@
 			<integer>5</integer>
 			<key>Background</key>
 			<string>star_field</string>
+			<key>Music</key>
+			<string>HungryWolf</string>
 		</dict>
 		<dict>
 			<key>TMXFile</key>
@@ -58,6 +62,8 @@
 			<integer>5</integer>
 			<key>Background</key>
 			<string>star_field</string>
+			<key>Music</key>
+			<string>HungryWolf</string>
 		</dict>
 	</array>
 </dict>
