@@ -26,6 +26,12 @@
 		958F34291B25652B00A34098 /* GameData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 958F34281B25652B00A34098 /* GameData.plist */; };
 		958F342B1B257D6400A34098 /* GameData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 958F342A1B257D6400A34098 /* GameData.swift */; };
 		958F342D1B25C94D00A34098 /* GameScene2.sks in Resources */ = {isa = PBXBuildFile; fileRef = 958F342C1B25C94D00A34098 /* GameScene2.sks */; };
+		958F34331B26F99600A34098 /* collect_something.caf in Resources */ = {isa = PBXBuildFile; fileRef = 958F34321B26F99600A34098 /* collect_something.caf */; };
+		958F34351B26FCD600A34098 /* QuietRefrain.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 958F34341B26FCD500A34098 /* QuietRefrain.mp3 */; };
+		958F34371B26FD1500A34098 /* endgame.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 958F34361B26FD1500A34098 /* endgame.mp3 */; };
+		958F34391B26FF4400A34098 /* explode.caf in Resources */ = {isa = PBXBuildFile; fileRef = 958F34381B26FF4400A34098 /* explode.caf */; };
+		958F343B1B2700A300A34098 /* Maze2.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 958F343A1B2700A300A34098 /* Maze2.tmx */; };
+		958F343F1B27034400A34098 /* QuietJungle.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 958F343E1B27034400A34098 /* QuietJungle.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +69,12 @@
 		958F342A1B257D6400A34098 /* GameData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameData.swift; sourceTree = "<group>"; };
 		958F342C1B25C94D00A34098 /* GameScene2.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene2.sks; sourceTree = "<group>"; };
 		958F342E1B25D23700A34098 /* BMgermar.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; path = BMgermar.TTF; sourceTree = "<group>"; };
+		958F34321B26F99600A34098 /* collect_something.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = collect_something.caf; sourceTree = "<group>"; };
+		958F34341B26FCD500A34098 /* QuietRefrain.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = QuietRefrain.mp3; sourceTree = "<group>"; };
+		958F34361B26FD1500A34098 /* endgame.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = endgame.mp3; sourceTree = "<group>"; };
+		958F34381B26FF4400A34098 /* explode.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = explode.caf; sourceTree = "<group>"; };
+		958F343A1B2700A300A34098 /* Maze2.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Maze2.tmx; sourceTree = "<group>"; };
+		958F343E1B27034400A34098 /* QuietJungle.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = QuietJungle.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,8 +126,8 @@
 				958F34201B21E06F00A34098 /* SKNode Classes */,
 				958F33F81B1FEB1E00A34098 /* GameViewController.swift */,
 				958F33FA1B1FEB1E00A34098 /* Main.storyboard */,
-				958F341C1B217C4F00A34098 /* Maze.tmx */,
-				958F34251B2549DD00A34098 /* HungryWolf.mp3 */,
+				958F343C1B27032700A34098 /* Mazes */,
+				958F343D1B27033000A34098 /* Sounds */,
 				958F33FD1B1FEB1F00A34098 /* Images.xcassets */,
 				958F34161B1FED6A00A34098 /* moving.atlas */,
 				958F34271B25650900A34098 /* Frameworks */,
@@ -168,6 +180,28 @@
 				958F34231B25488B00A34098 /* AVFoundation.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		958F343C1B27032700A34098 /* Mazes */ = {
+			isa = PBXGroup;
+			children = (
+				958F341C1B217C4F00A34098 /* Maze.tmx */,
+				958F343A1B2700A300A34098 /* Maze2.tmx */,
+			);
+			name = Mazes;
+			sourceTree = "<group>";
+		};
+		958F343D1B27033000A34098 /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				958F34251B2549DD00A34098 /* HungryWolf.mp3 */,
+				958F34341B26FCD500A34098 /* QuietRefrain.mp3 */,
+				958F343E1B27034400A34098 /* QuietJungle.mp3 */,
+				958F34321B26F99600A34098 /* collect_something.caf */,
+				958F34381B26FF4400A34098 /* explode.caf */,
+				958F34361B26FD1500A34098 /* endgame.mp3 */,
+			);
+			name = Sounds;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -251,15 +285,21 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				958F343F1B27034400A34098 /* QuietJungle.mp3 in Resources */,
 				958F34011B1FEB1F00A34098 /* LaunchScreen.xib in Resources */,
 				958F34261B2549DD00A34098 /* HungryWolf.mp3 in Resources */,
+				958F34331B26F99600A34098 /* collect_something.caf in Resources */,
 				958F33FE1B1FEB1F00A34098 /* Images.xcassets in Resources */,
 				958F341D1B217C4F00A34098 /* Maze.tmx in Resources */,
 				958F34291B25652B00A34098 /* GameData.plist in Resources */,
+				958F34371B26FD1500A34098 /* endgame.mp3 in Resources */,
 				958F33F51B1FEB1E00A34098 /* GameScene.sks in Resources */,
 				958F34171B1FED6A00A34098 /* moving.atlas in Resources */,
 				958F33FC1B1FEB1E00A34098 /* Main.storyboard in Resources */,
+				958F34391B26FF4400A34098 /* explode.caf in Resources */,
 				958F342D1B25C94D00A34098 /* GameScene2.sks in Resources */,
+				958F34351B26FCD600A34098 /* QuietRefrain.mp3 in Resources */,
+				958F343B1B2700A300A34098 /* Maze2.tmx in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

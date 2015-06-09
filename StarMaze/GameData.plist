@@ -51,7 +51,7 @@
 		</dict>
 		<dict>
 			<key>TMXFile</key>
-			<string>Maze</string>
+			<string>Maze2</string>
 			<key>NextSKSFile</key>
 			<string>GameScene2</string>
 			<key>Speed</key>
@@ -63,7 +63,23 @@
 			<key>Background</key>
 			<string>star_field</string>
 			<key>Music</key>
-			<string>HungryWolf</string>
+			<string>QuietRefrain</string>
+		</dict>
+		<dict>
+			<key>TMXFile</key>
+			<string>Maze1</string>
+			<key>NextSKSFile</key>
+			<string>GameScene2</string>
+			<key>Speed</key>
+			<integer>5</integer>
+			<key>EnemySpeed</key>
+			<integer>4</integer>
+			<key>EnemyLogic</key>
+			<integer>5</integer>
+			<key>Background</key>
+			<string>star_field</string>
+			<key>Music</key>
+			<string>QuietJungle</string>
 		</dict>
 	</array>
 </dict>

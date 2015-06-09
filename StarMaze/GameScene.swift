@@ -50,35 +50,37 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
     
     var gameLabel:SKLabelNode?
     
+    var parallaxBG:SKSpriteNode?
+    var parallaxOffset:CGPoint = CGPointZero
+    
     //MARK: - Music Player
     
-    var backgroundMusicPlayer: AVAudioPlayer!
-    
-    func playBackgroundMusic(filename: String) {
-        let url = NSBundle.mainBundle().URLForResource(
-            filename, withExtension: nil)
-        if (url == nil) {
-            println("Could not find file: \(filename)")
-            return
-        }
-        
-        var error: NSError? = nil
-        backgroundMusicPlayer =
-            AVAudioPlayer(contentsOfURL: url, error: &error)
-        if backgroundMusicPlayer == nil {
-            println("Could not create audio player: \(error!)")
-            return
-        }
-        
-        backgroundMusicPlayer.numberOfLoops = -1
-        backgroundMusicPlayer.prepareToPlay()
-        backgroundMusicPlayer.play()
-    }
-    
+//    var backgroundMusicPlayer: AVAudioPlayer!
+//    
+//    func playBackgroundMusic(filename: String) {
+//        let url = NSBundle.mainBundle().URLForResource(
+//            filename, withExtension: nil)
+//        if (url == nil) {
+//            println("Could not find file: \(filename)")
+//            return
+//        }
+//        
+//        var error: NSError? = nil
+//        backgroundMusicPlayer =
+//            AVAudioPlayer(contentsOfURL: url, error: &error)
+//        if backgroundMusicPlayer == nil {
+//            println("Could not create audio player: \(error!)")
+//            return
+//        }
+//        
+//        backgroundMusicPlayer.numberOfLoops = -1
+//        backgroundMusicPlayer.prepareToPlay()
+//        backgroundMusicPlayer.play()
+//    }
+//    
      var bgSoundPlayer:AVAudioPlayer?
     
     func playBackgroundSound(name:String) {
-        
         
         if (bgSoundPlayer != nil) {
             
@@ -86,7 +88,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
             bgSoundPlayer = nil
             
         }
-        
         
         let fileURL:NSURL = NSBundle.mainBundle().URLForResource( name , withExtension: "mp3")!
         
@@ -121,6 +122,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         }
     }
 
+    //MARK: - Background
+    func createBackground(image:String) {
+        
+        parallaxBG = SKSpriteNode(imageNamed: image)
+        mazeWorld!.addChild(parallaxBG!)
+        parallaxBG!.position = CGPoint(x: parallaxBG!.size.width / 2 , y: -parallaxBG!.size.height / 2)
+        parallaxBG!.alpha = 0.5
+    }
     
     
     //MARK: - Initialize View
@@ -182,7 +191,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
             
         }
         
-        livesLeft = 1
+        livesLeft = 3
         
         
         self.backgroundColor = SKColor.blackColor()
@@ -190,13 +199,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         
         self.physicsWorld.gravity = CGVector(dx: 0, dy: 0)
         
+        if ( gameDict["ParallaxOffset"] != nil) {
+            
+            let parallaxOffsetAsString = gameDict["ParallaxOffset"] as! String
+            parallaxOffset = CGPointFromString(parallaxOffsetAsString )
+            
+        }
+
+        
         physicsWorld.contactDelegate = self
         
         self.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         
         //MARK: Play Background Music
-        playBackgroundMusic("HungryWolf.mp3")
-        
+//        playBackgroundSound("HungryWolf.mp3")
+//        
         
         useTMXFiles = gameDict["UseTMXFile"] as! Bool
 
@@ -221,6 +238,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         mazeWorld!.addChild(hero!)
         
         hero!.currentSpeed = currentSpeed
+        
+        //MARK: Background
+        if (bgImage != nil) {
+            
+            createBackground(bgImage!)
+            
+        }
+        
+
         
         //MARK: Gestures
         
@@ -405,6 +431,29 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
     func centerOnNode (node: SKNode) {
         let cameraPositionInScene = self.convertPoint(node.position, fromNode: mazeWorld!)
         mazeWorld!.position = CGPoint(x: mazeWorld!.position.x - cameraPositionInScene.x, y: mazeWorld!.position.y - cameraPositionInScene.y)
+        
+        if parallaxOffset.x != 0 {
+            if ( Int(cameraPositionInScene.x) < 0 ) {
+                
+                parallaxBG!.position = CGPoint(x: parallaxBG!.position.x + parallaxOffset.x, y: parallaxBG!.position.y)
+                
+            } else if ( Int(cameraPositionInScene.x) > 0 ) {
+                
+                parallaxBG!.position = CGPoint(x: parallaxBG!.position.x - parallaxOffset.x, y: parallaxBG!.position.y)
+            }
+        }
+        
+        if parallaxOffset.y != 0 {
+            if ( Int(cameraPositionInScene.y) < 0 ) {
+                
+                parallaxBG!.position = CGPoint(x: parallaxBG!.position.x , y: parallaxBG!.position.y + parallaxOffset.y)
+                
+                
+            } else if ( Int(cameraPositionInScene.y) > 0 ) {
+                
+                parallaxBG!.position = CGPoint(x: parallaxBG!.position.x , y: parallaxBG!.position.y - parallaxOffset.y )
+            }
+        }
     }
 
     
@@ -422,6 +471,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
                 }
             
             case BodyType.hero.rawValue | BodyType.enemy.rawValue:
+                let explodeSound:SKAction = SKAction.playSoundFileNamed("explode.caf", waitForCompletion: false)
+                self.runAction(explodeSound)
                 reloadLevel()
             
             case BodyType.boundary.rawValue | BodyType.sensorUp.rawValue:
@@ -439,6 +490,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
             
             
             case BodyType.hero.rawValue | BodyType.star.rawValue:
+                
+                let collectSound:SKAction = SKAction.playSoundFileNamed("collect_something.caf", waitForCompletion: false)
+                self.runAction(collectSound)
+                
                 if let star = contact.bodyA.node as? Star {
                     star.removeFromParent()
                 } else if let star = contact.bodyB.node as? Star {
@@ -611,6 +666,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
             gameLabel!.position = CGPointZero
             gameLabel!.horizontalAlignmentMode = .Center
             
+            playBackgroundSound("endgame")
+            
             let scaleAction = SKAction.scaleTo(0.2,duration: 3)
             let fadeAction = SKAction.fadeAlphaTo(0, duration: 3)
             let group = SKAction.group( [scaleAction, fadeAction])
@@ -658,10 +715,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         currentLevel++
         
         if (bgSoundPlayer != nil) {
-            
+            println("Stopped Music")
             bgSoundPlayer!.stop()
             bgSoundPlayer = nil
-            
         }
         
         if useTMXFiles == true {
@@ -675,7 +731,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         var scene:GameScene = GameScene(size: self.size)
         scene.scaleMode = .AspectFill
         
-        self.view?.presentScene(scene, transition: SKTransition.fadeWithDuration(2))
+        self.view?.presentScene(scene, transition: SKTransition.fadeWithDuration(0))
     }
     
     func loadNextSKSLevel() {
@@ -683,7 +739,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         var scene = GameScene.unarchiveFromFile(currentSKSFile) as? GameScene
         scene!.scaleMode = .AspectFill
         
-        self.view?.presentScene(scene, transition: SKTransition.fadeWithDuration(2))
+        self.view?.presentScene(scene, transition: SKTransition.fadeWithDuration(0))
         
     }
 
