@@ -55,6 +55,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
     
     var pointsLabel:SKLabelNode?
     
+    var highScoreLabel:SKLabelNode?
+    
+    var isLastLevel: Bool = false
+    var gameOver:Bool = false
+    
     //MARK: - Music Player
     
 //    var backgroundMusicPlayer: AVAudioPlayer!
@@ -108,7 +113,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
     //MARK: - SKLabels
     
     func createLivesLabel() {
-        gameLabel = SKLabelNode(fontNamed: "BM germar")
+        gameLabel = SKLabelNode(fontNamed: "BMgermar")
         gameLabel!.horizontalAlignmentMode = .Left
         gameLabel!.verticalAlignmentMode = .Center
         gameLabel!.fontColor = SKColor.whiteColor()
@@ -125,11 +130,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
     }
     
     func createPointsLabel() {
-        pointsLabel = SKLabelNode(fontNamed: "BM germar")
+        pointsLabel = SKLabelNode(fontNamed: "BMgermar")
         pointsLabel!.horizontalAlignmentMode = .Left
         pointsLabel!.verticalAlignmentMode = .Center
         pointsLabel!.fontColor = SKColor.whiteColor()
-        pointsLabel!.text = "Score: \(score)"
+        pointsLabel!.text = "Score: \(GameState.sharedInstance.score)"
         addChild(pointsLabel!)
         
         if UIDevice.currentDevice().userInterfaceIdiom == .Phone {
@@ -140,6 +145,30 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
             pointsLabel!.position = CGPoint(x: -(self.size.width / 2.3), y: -(self.size.height / 3)+30)
         }
     }
+    
+    func createHighScoreLabel() {
+        highScoreLabel = SKLabelNode(fontNamed: "BMgermar")
+        highScoreLabel!.horizontalAlignmentMode = .Left
+        highScoreLabel!.verticalAlignmentMode = .Center
+        highScoreLabel!.fontColor = SKColor.whiteColor()
+        highScoreLabel!.text = String(format: "High Score: %d", GameState.sharedInstance.highScore)
+//        if highScore == nil {
+//            highScoreLabel!.text = "HighScore: 0"
+//        } else {
+//            highScoreLabel!.text = "HighScore: \(highScore!)"
+//        }
+       
+        addChild(highScoreLabel!)
+        
+        if UIDevice.currentDevice().userInterfaceIdiom == .Phone {
+            highScoreLabel!.position = CGPoint(x: -(self.size.width / 2.3), y: -(self.size.height / 3)+60)
+        }else if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
+            highScoreLabel!.position = CGPoint(x: -(self.size.width / 2.3), y: -(self.size.height / 2.3)+60)
+        } else {
+            highScoreLabel!.position = CGPoint(x: -(self.size.width / 2.3), y: -(self.size.height / 3)+60)
+        }
+    }
+
 
 
     //MARK: - Background
@@ -164,10 +193,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         let levelArray: AnyObject = dict.objectForKey("LevelSettings")!
         
         if let levelNSArray:NSArray = levelArray as? NSArray{
-            
-            //println(levelNSArray)
-            
+
             var levelDict:NSDictionary = levelNSArray[currentLevel] as! NSDictionary
+            
+            let maxLevel = levelNSArray.count - 1
+            if currentLevel == maxLevel {
+                let isLastLevel = true
+            }
             
             if let tmxFile = levelDict["TMXFile"] as? String {
                 
@@ -304,6 +336,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         tellEnemiesWhereHeroIs()
         createLivesLabel()
         createPointsLabel()
+        createHighScoreLabel()
         
     }
     
@@ -412,6 +445,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
    
     //MARK: - Update Cycle
     override func update(currentTime: CFTimeInterval) {
+        if gameOver {
+            return
+        }
         if heroIsDead == false {
             hero!.update()
             
@@ -441,6 +477,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
             hero!.runAnimation()
 
         }
+        
     }
     
     override func didSimulatePhysics() {
@@ -522,8 +559,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
                 }
             
                 starsAcquired++
-                score = score + 1
-                pointsLabel!.text = "Score: \(score)"
+                
+                GameState.sharedInstance.score = GameState.sharedInstance.score + 1
+                pointsLabel!.text = String(format: "Score : %d" , GameState.sharedInstance.score)
+                //highScoreLabel!.text = String(format: "High Score: %d", GameState.sharedInstance.highScore)
+                
+                // First Implementation
+//                score = score + 1
+//                pointsLabel!.text = "Score: \(score)"
+                updateHighScoreLabel (GameState.sharedInstance.score)
             
                 if starsAcquired == starsTotal {
                     loadNextLevel()
@@ -684,20 +728,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         livesLeft = livesLeft - 1
         if livesLeft == 0 {
             //TODO: Game Over Screen
+            endGame()
             
-            gameLabel!.text = "Game Over"
-            gameLabel!.position = CGPointZero
-            gameLabel!.horizontalAlignmentMode = .Center
-            
-            playBackgroundSound("endgame")
-            
-            let scaleAction = SKAction.scaleTo(0.2,duration: 3)
-            let fadeAction = SKAction.fadeAlphaTo(0, duration: 3)
-            let group = SKAction.group( [scaleAction, fadeAction])
-            
-            mazeWorld!.runAction(group, completion: {
-                self.resetGame()
-            })
+//            gameLabel!.text = "Game Over"
+//            gameLabel!.position = CGPointZero
+//            gameLabel!.horizontalAlignmentMode = .Center
+//            let scaleAction = SKAction.scaleTo(0.2,duration: 3)
+//            let fadeAction = SKAction.fadeAlphaTo(0, duration: 3)
+//            let group = SKAction.group( [scaleAction, fadeAction])
+//            
+//            mazeWorld!.runAction(group, completion: {
+//                self.resetGame()
+//            })
         } else {
             //TODO: Update Text for Lives Label
             gameLabel!.text = "Lives: \(livesLeft)"
@@ -710,10 +752,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         }
     }
     
+    func updateHighScoreLabel (currentScore: Int) {
+            if currentScore > GameState.sharedInstance.highScore {
+                highScoreLabel!.text = String(format: "High Score: %d", currentScore)
+            } else {
+                highScoreLabel!.text = String(format: "High Score: %d", GameState.sharedInstance.highScore)
+        }
+    }
+    
     func resetGame() {
-        highScore = score
+        
         livesLeft = 3
-        score = 0
+        GameState.sharedInstance.score = 0
         currentLevel = 0
         
         if (bgSoundPlayer != nil) {
@@ -745,11 +795,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
             bgSoundPlayer = nil
         }
         
-        if useTMXFiles == true {
-            loadNextTMXLevel()
+        if isLastLevel == true {
+            endGame()
         } else {
-            loadNextSKSLevel()
+            if useTMXFiles == true {
+                loadNextTMXLevel()
+            } else {
+                loadNextSKSLevel()
+            }
         }
+        
+       
     }
     
     func loadNextTMXLevel() {
@@ -768,6 +824,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         
     }
 
+    func endGame () {
+        gameOver = true
+        if (bgSoundPlayer != nil) {
+            println("Stopped Music")
+            bgSoundPlayer!.stop()
+            bgSoundPlayer = nil
+        }
+        GameState.sharedInstance.saveState()
+        let reveal = SKTransition.fadeWithDuration(0.5)
+        let endGameScene = EndGameScene(size: self.size)
+        self.view!.presentScene(endGameScene, transition: reveal)
+    }
     
     //MARK: - Final Closure
 }
