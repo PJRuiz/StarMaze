@@ -204,31 +204,31 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
             if let tmxFile = levelDict["TMXFile"] as? String {
                 
                 currentTMXFile = tmxFile
-                println("specified a TMX file for this level ")
+//                println("specified a TMX file for this level ")
                 println(currentTMXFile)
             }
             
             if let sksFile = levelDict["NextSKSFile"] as? String {
                 
                 nextSKSFile = sksFile
-                println("specified a next SKS file if this level is passed ")
+//                println("specified a next SKS file if this level is passed ")
             }
             
             if let speed = levelDict["Speed"] as? Float  {
                 
                 currentSpeed = speed
-                println( currentSpeed )
+//                println( currentSpeed )
             }
             if let espeed = levelDict["EnemySpeed"] as? Float  {
                 
                 enemySpeed = espeed
-                println( enemySpeed )
+//                println( enemySpeed )
             }
             
             if let elogic = levelDict["EnemyLogic"] as? Double   {
                 
                 enemyLogic = elogic
-                println( enemyLogic )
+//                println( enemyLogic )
             }
             
             if let bg = levelDict["Background"] as? String    {
@@ -270,7 +270,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         useTMXFiles = gameDict["UseTMXFile"] as! Bool
 
         if (useTMXFiles == true) {
-            println("setup with tmx")
+//            println("setup with tmx")
             
             self.enumerateChildNodesWithName("*") {
                 node, stop in
@@ -323,7 +323,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         })
         
         if (useTMXFiles == false) {
-            println("setup with SKS")
+//            println("setup with SKS")
             setUpBoundaryFromSKS()
             setUpEdgeFromSKS()
             setUpStarsFromSKS()
@@ -790,7 +790,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         currentLevel++
         
         if (bgSoundPlayer != nil) {
-            println("Stopped Music")
+//            println("Stopped Music")
             bgSoundPlayer!.stop()
             bgSoundPlayer = nil
         }
@@ -827,7 +827,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
     func endGame () {
         gameOver = true
         if (bgSoundPlayer != nil) {
-            println("Stopped Music")
+//            println("Stopped Music")
             bgSoundPlayer!.stop()
             bgSoundPlayer = nil
         }
