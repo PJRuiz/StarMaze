@@ -67,7 +67,7 @@
 		</dict>
 		<dict>
 			<key>TMXFile</key>
-			<string>Maze1</string>
+			<string>Maze</string>
 			<key>NextSKSFile</key>
 			<string>GameScene2</string>
 			<key>Speed</key>

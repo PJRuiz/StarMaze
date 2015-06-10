@@ -12,3 +12,5 @@ var livesLeft = 3
 var currentLevel = 0
 var firstSKSFile = "GameScene"
 var currentSKSFile = firstSKSFile
+var score = 0
+var highScore: Int?

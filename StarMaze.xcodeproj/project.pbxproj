@@ -32,6 +32,7 @@
 		958F34391B26FF4400A34098 /* explode.caf in Resources */ = {isa = PBXBuildFile; fileRef = 958F34381B26FF4400A34098 /* explode.caf */; };
 		958F343B1B2700A300A34098 /* Maze2.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 958F343A1B2700A300A34098 /* Maze2.tmx */; };
 		958F343F1B27034400A34098 /* QuietJungle.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 958F343E1B27034400A34098 /* QuietJungle.mp3 */; };
+		958F34411B27E5CB00A34098 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 958F34401B27E5CA00A34098 /* GameKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,6 +76,7 @@
 		958F34381B26FF4400A34098 /* explode.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = explode.caf; sourceTree = "<group>"; };
 		958F343A1B2700A300A34098 /* Maze2.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Maze2.tmx; sourceTree = "<group>"; };
 		958F343E1B27034400A34098 /* QuietJungle.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = QuietJungle.mp3; sourceTree = "<group>"; };
+		958F34401B27E5CA00A34098 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +85,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				958F34241B25488B00A34098 /* AVFoundation.framework in Frameworks */,
+				958F34411B27E5CB00A34098 /* GameKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -99,6 +102,7 @@
 		958F33E41B1FEB1E00A34098 = {
 			isa = PBXGroup;
 			children = (
+				958F34401B27E5CA00A34098 /* GameKit.framework */,
 				958F33EF1B1FEB1E00A34098 /* StarMaze */,
 				958F34091B1FEB1F00A34098 /* StarMazeTests */,
 				958F33EE1B1FEB1E00A34098 /* Products */,
@@ -254,6 +258,11 @@
 					958F33EC1B1FEB1E00A34098 = {
 						CreatedOnToolsVersion = 6.3.1;
 						DevelopmentTeam = 74VVV5ZXY4;
+						SystemCapabilities = {
+							com.apple.GameCenter = {
+								enabled = 1;
+							};
+						};
 					};
 					958F34051B1FEB1F00A34098 = {
 						CreatedOnToolsVersion = 6.3.1;
@@ -454,9 +463,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = StarMaze/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -465,9 +476,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = StarMaze/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

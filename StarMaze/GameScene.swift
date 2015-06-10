@@ -53,6 +53,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
     var parallaxBG:SKSpriteNode?
     var parallaxOffset:CGPoint = CGPointZero
     
+    var pointsLabel:SKLabelNode?
+    
     //MARK: - Music Player
     
 //    var backgroundMusicPlayer: AVAudioPlayer!
@@ -105,7 +107,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
     
     //MARK: - SKLabels
     
-    func createLabel() {
+    func createLivesLabel() {
         gameLabel = SKLabelNode(fontNamed: "BM germar")
         gameLabel!.horizontalAlignmentMode = .Left
         gameLabel!.verticalAlignmentMode = .Center
@@ -121,6 +123,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
             gameLabel!.position = CGPoint(x: -(self.size.width / 2.3), y: -(self.size.height / 3))
         }
     }
+    
+    func createPointsLabel() {
+        pointsLabel = SKLabelNode(fontNamed: "BM germar")
+        pointsLabel!.horizontalAlignmentMode = .Left
+        pointsLabel!.verticalAlignmentMode = .Center
+        pointsLabel!.fontColor = SKColor.whiteColor()
+        pointsLabel!.text = "Score: \(score)"
+        addChild(pointsLabel!)
+        
+        if UIDevice.currentDevice().userInterfaceIdiom == .Phone {
+            pointsLabel!.position = CGPoint(x: -(self.size.width / 2.3), y: -(self.size.height / 3)+30)
+        }else if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
+            pointsLabel!.position = CGPoint(x: -(self.size.width / 2.3), y: -(self.size.height / 2.3)+30)
+        } else {
+            pointsLabel!.position = CGPoint(x: -(self.size.width / 2.3), y: -(self.size.height / 3)+30)
+        }
+    }
+
 
     //MARK: - Background
     func createBackground(image:String) {
@@ -282,7 +302,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         }
         
         tellEnemiesWhereHeroIs()
-        createLabel()
+        createLivesLabel()
+        createPointsLabel()
         
     }
     
@@ -501,6 +522,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
                 }
             
                 starsAcquired++
+                score = score + 1
+                pointsLabel!.text = "Score: \(score)"
             
                 if starsAcquired == starsTotal {
                     loadNextLevel()
@@ -688,7 +711,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
     }
     
     func resetGame() {
+        highScore = score
         livesLeft = 3
+        score = 0
         currentLevel = 0
         
         if (bgSoundPlayer != nil) {
