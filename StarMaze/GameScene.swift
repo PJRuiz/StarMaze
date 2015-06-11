@@ -60,6 +60,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
     var isLastLevel: Bool = false
     var gameOver:Bool = false
     
+    var tryAgainLabel:SKLabelNode?
+    
     //MARK: - Music Player
     
 //    var backgroundMusicPlayer: AVAudioPlayer!
@@ -168,6 +170,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
             highScoreLabel!.position = CGPoint(x: -(self.size.width / 2.3), y: -(self.size.height / 3)+60)
         }
     }
+    
+    func createTryAgainLabel() {
+        tryAgainLabel = SKLabelNode(fontNamed: "BMgermar")
+        tryAgainLabel!.fontSize = 30
+        tryAgainLabel!.fontColor = SKColor.whiteColor()
+        tryAgainLabel!.position = CGPoint(x: self.size.width / 2, y: self.size.height / 2)
+        tryAgainLabel!.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Center
+        tryAgainLabel!.text = "Tap To Try Again"
+        tryAgainLabel!.hidden = true
+        addChild(tryAgainLabel!)
+    }
 
 
 
@@ -205,7 +218,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
                 
                 currentTMXFile = tmxFile
 //                println("specified a TMX file for this level ")
-                println(currentTMXFile)
+//                println(currentTMXFile)
             }
             
             if let sksFile = levelDict["NextSKSFile"] as? String {
@@ -337,6 +350,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         createLivesLabel()
         createPointsLabel()
         createHighScoreLabel()
+        createTryAgainLabel()
         
     }
     
@@ -418,11 +432,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
     
     //MARK: - Touch Functions
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
-        /* Called when a touch begins */
-        
-        for touch in (touches as! Set<UITouch>) {
-            let location = touch.locationInNode(self)
-            
+        if gameOver {
+            gameOver = false
+            tryAgainLabel!.hidden = true
+            resetGame()
         }
     }
     
@@ -730,9 +743,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
             //TODO: Game Over Screen
             endGame()
             
-//            gameLabel!.text = "Game Over"
-//            gameLabel!.position = CGPointZero
-//            gameLabel!.horizontalAlignmentMode = .Center
 //            let scaleAction = SKAction.scaleTo(0.2,duration: 3)
 //            let fadeAction = SKAction.fadeAlphaTo(0, duration: 3)
 //            let group = SKAction.group( [scaleAction, fadeAction])
@@ -741,7 +751,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
 //                self.resetGame()
 //            })
         } else {
-            //TODO: Update Text for Lives Label
             gameLabel!.text = "Lives: \(livesLeft)"
         }
     }
@@ -832,9 +841,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
             bgSoundPlayer = nil
         }
         GameState.sharedInstance.saveState()
-        let reveal = SKTransition.fadeWithDuration(0.5)
-        let endGameScene = EndGameScene(size: self.size)
-        self.view!.presentScene(endGameScene, transition: reveal)
+ 
+        playBackgroundSound("gameOver")
+        gameLabel!.text = "Game Over, Tap to Try Again"
+        gameLabel!.position = CGPointZero
+        gameLabel!.horizontalAlignmentMode = .Center
+        
+        tryAgainLabel!.hidden = false
+
     }
     
     //MARK: - Final Closure

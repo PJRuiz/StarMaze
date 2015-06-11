@@ -64,7 +64,6 @@ class EndGameScene: SKScene {
         let gameOverSound = SKAction.playSoundFileNamed("gameOver.mp3", waitForCompletion: false)
         self.runAction(gameOverSound)
         
-        //playBackgroundSound("gameOver.mp3")
         self.backgroundColor = SKColor.blackColor()
         
         let scoreLabel = SKLabelNode(fontNamed: "BMgermar")
