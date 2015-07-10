@@ -64,29 +64,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
     
     //MARK: - Music Player
     
-//    var backgroundMusicPlayer: AVAudioPlayer!
-//    
-//    func playBackgroundMusic(filename: String) {
-//        let url = NSBundle.mainBundle().URLForResource(
-//            filename, withExtension: nil)
-//        if (url == nil) {
-//            println("Could not find file: \(filename)")
-//            return
-//        }
-//        
-//        var error: NSError? = nil
-//        backgroundMusicPlayer =
-//            AVAudioPlayer(contentsOfURL: url, error: &error)
-//        if backgroundMusicPlayer == nil {
-//            println("Could not create audio player: \(error!)")
-//            return
-//        }
-//        
-//        backgroundMusicPlayer.numberOfLoops = -1
-//        backgroundMusicPlayer.prepareToPlay()
-//        backgroundMusicPlayer.play()
-//    }
-//    
      var bgSoundPlayer:AVAudioPlayer?
     
     func playBackgroundSound(name:String) {
@@ -154,11 +131,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         highScoreLabel!.verticalAlignmentMode = .Center
         highScoreLabel!.fontColor = SKColor.whiteColor()
         highScoreLabel!.text = String(format: "High Score: %d", GameState.sharedInstance.highScore)
-//        if highScore == nil {
-//            highScoreLabel!.text = "HighScore: 0"
-//        } else {
-//            highScoreLabel!.text = "HighScore: \(highScore!)"
-//        }
        
         addChild(highScoreLabel!)
         
@@ -210,6 +182,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
             var levelDict:NSDictionary = levelNSArray[currentLevel] as! NSDictionary
             
             let maxLevel = levelNSArray.count - 1
+            println("The max level is \(maxLevel) and we are on \(currentLevel)")
             if currentLevel == maxLevel {
                 let isLastLevel = true
             }
@@ -575,14 +548,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
                 
                 GameState.sharedInstance.score = GameState.sharedInstance.score + 1
                 pointsLabel!.text = String(format: "Score : %d" , GameState.sharedInstance.score)
-                //highScoreLabel!.text = String(format: "High Score: %d", GameState.sharedInstance.highScore)
-                
-                // First Implementation
-//                score = score + 1
-//                pointsLabel!.text = "Score: \(score)"
+
                 updateHighScoreLabel (GameState.sharedInstance.score)
             
                 if starsAcquired == starsTotal {
+                    GameState.sharedInstance.score = GameState.sharedInstance.score + livesLeft * 50
+                    pointsLabel!.text = String(format: "Score : %d" , GameState.sharedInstance.score)
                     loadNextLevel()
                 }
             
@@ -740,16 +711,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
     func loseLife() {
         livesLeft = livesLeft - 1
         if livesLeft == 0 {
-            //TODO: Game Over Screen
             endGame()
-            
-//            let scaleAction = SKAction.scaleTo(0.2,duration: 3)
-//            let fadeAction = SKAction.fadeAlphaTo(0, duration: 3)
-//            let group = SKAction.group( [scaleAction, fadeAction])
-//            
-//            mazeWorld!.runAction(group, completion: {
-//                self.resetGame()
-//            })
+
         } else {
             gameLabel!.text = "Lives: \(livesLeft)"
         }
@@ -799,22 +762,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         currentLevel++
         
         if (bgSoundPlayer != nil) {
-//            println("Stopped Music")
             bgSoundPlayer!.stop()
             bgSoundPlayer = nil
         }
         
         if isLastLevel == true {
-            endGame()
-        } else {
-            if useTMXFiles == true {
-                loadNextTMXLevel()
-            } else {
-                loadNextSKSLevel()
-            }
+            currentLevel = 0
         }
         
-       
+        if useTMXFiles == true {
+            loadNextTMXLevel()
+        } else {
+            loadNextSKSLevel()
+        }
     }
     
     func loadNextTMXLevel() {

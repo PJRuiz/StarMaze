@@ -35,7 +35,7 @@
 	<array>
 		<dict>
 			<key>TMXFile</key>
-			<string>Maze</string>
+			<string>Maze3</string>
 			<key>NextSKSFile</key>
 			<string>GameScene2</string>
 			<key>Speed</key>
@@ -51,7 +51,7 @@
 		</dict>
 		<dict>
 			<key>TMXFile</key>
-			<string>Maze2</string>
+			<string>Maze</string>
 			<key>NextSKSFile</key>
 			<string>GameScene2</string>
 			<key>Speed</key>
