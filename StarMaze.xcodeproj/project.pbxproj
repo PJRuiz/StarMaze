@@ -7,7 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9562BB8C1B48E109004F666B /* Maze3.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 9562BB8B1B48E109004F666B /* Maze3.tmx */; };
+		9506404E1B560EA80066AC5D /* Maze4.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 9506404C1B560EA80066AC5D /* Maze4.tmx */; };
+		950640511B560EBA0066AC5D /* Maze3.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 950640501B560EBA0066AC5D /* Maze3.tmx */; };
+		950640531B5611360066AC5D /* Maze5.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 950640521B5611360066AC5D /* Maze5.tmx */; };
+		9506405E1B5615230066AC5D /* PopStar.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 9506405C1B5615230066AC5D /* PopStar.mp3 */; };
+		9506405F1B5615230066AC5D /* Vertigo.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 9506405D1B5615230066AC5D /* Vertigo.mp3 */; };
+		950640631B56159E0066AC5D /* Heatseeker.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 950640601B56159E0066AC5D /* Heatseeker.mp3 */; };
+		950640641B56159E0066AC5D /* Homeland.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 950640611B56159E0066AC5D /* Homeland.mp3 */; };
+		950640651B56159E0066AC5D /* IcyFauna.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 950640621B56159E0066AC5D /* IcyFauna.mp3 */; };
+		950640681B5753D60066AC5D /* AlternatingLine.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 950640661B5753D60066AC5D /* AlternatingLine.mp3 */; };
+		950640691B5753D60066AC5D /* MelodicCycle.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 950640671B5753D60066AC5D /* MelodicCycle.mp3 */; };
+		9506406C1B5756CD0066AC5D /* DeepDream.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 9506406A1B5756CD0066AC5D /* DeepDream.mp3 */; };
+		9506406D1B5756CD0066AC5D /* FirePhaser.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 9506406B1B5756CD0066AC5D /* FirePhaser.mp3 */; };
+		9506406F1B5757450066AC5D /* SoftSole.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 9506406E1B5757450066AC5D /* SoftSole.mp3 */; };
+		950640711B5762530066AC5D /* Maze6.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 950640701B5762530066AC5D /* Maze6.tmx */; };
+		950640751B5763A60066AC5D /* PureCandy.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 950640741B5763A60066AC5D /* PureCandy.mp3 */; };
+		950640771B57642F0066AC5D /* ChillOut.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 950640761B57642F0066AC5D /* ChillOut.mp3 */; };
+		950640791B57648F0066AC5D /* AboveBeyond.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 950640781B57648F0066AC5D /* AboveBeyond.mp3 */; };
 		958F33F31B1FEB1E00A34098 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 958F33F21B1FEB1E00A34098 /* AppDelegate.swift */; };
 		958F33F51B1FEB1E00A34098 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 958F33F41B1FEB1E00A34098 /* GameScene.sks */; };
 		958F33F71B1FEB1E00A34098 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 958F33F61B1FEB1E00A34098 /* GameScene.swift */; };
@@ -49,7 +65,23 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		9562BB8B1B48E109004F666B /* Maze3.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Maze3.tmx; sourceTree = "<group>"; };
+		9506404C1B560EA80066AC5D /* Maze4.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = Maze4.tmx; path = ../../Maze4.tmx; sourceTree = "<group>"; };
+		950640501B560EBA0066AC5D /* Maze3.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = Maze3.tmx; path = ../../Maze3.tmx; sourceTree = "<group>"; };
+		950640521B5611360066AC5D /* Maze5.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = Maze5.tmx; path = ../../Maze5.tmx; sourceTree = "<group>"; };
+		9506405C1B5615230066AC5D /* PopStar.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = PopStar.mp3; sourceTree = "<group>"; };
+		9506405D1B5615230066AC5D /* Vertigo.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Vertigo.mp3; sourceTree = "<group>"; };
+		950640601B56159E0066AC5D /* Heatseeker.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Heatseeker.mp3; sourceTree = "<group>"; };
+		950640611B56159E0066AC5D /* Homeland.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Homeland.mp3; sourceTree = "<group>"; };
+		950640621B56159E0066AC5D /* IcyFauna.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = IcyFauna.mp3; sourceTree = "<group>"; };
+		950640661B5753D60066AC5D /* AlternatingLine.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = AlternatingLine.mp3; sourceTree = "<group>"; };
+		950640671B5753D60066AC5D /* MelodicCycle.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = MelodicCycle.mp3; sourceTree = "<group>"; };
+		9506406A1B5756CD0066AC5D /* DeepDream.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = DeepDream.mp3; sourceTree = "<group>"; };
+		9506406B1B5756CD0066AC5D /* FirePhaser.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = FirePhaser.mp3; sourceTree = "<group>"; };
+		9506406E1B5757450066AC5D /* SoftSole.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = SoftSole.mp3; sourceTree = "<group>"; };
+		950640701B5762530066AC5D /* Maze6.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Maze6.tmx; sourceTree = "<group>"; };
+		950640741B5763A60066AC5D /* PureCandy.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = PureCandy.mp3; sourceTree = "<group>"; };
+		950640761B57642F0066AC5D /* ChillOut.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = ChillOut.mp3; sourceTree = "<group>"; };
+		950640781B57648F0066AC5D /* AboveBeyond.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = AboveBeyond.mp3; sourceTree = "<group>"; };
 		958F33ED1B1FEB1E00A34098 /* StarMaze.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StarMaze.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		958F33F11B1FEB1E00A34098 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		958F33F21B1FEB1E00A34098 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -195,9 +227,12 @@
 		958F343C1B27032700A34098 /* TMX Mazes */ = {
 			isa = PBXGroup;
 			children = (
-				9562BB8B1B48E109004F666B /* Maze3.tmx */,
+				950640701B5762530066AC5D /* Maze6.tmx */,
+				950640521B5611360066AC5D /* Maze5.tmx */,
 				958F341C1B217C4F00A34098 /* Maze.tmx */,
 				958F343A1B2700A300A34098 /* Maze2.tmx */,
+				950640501B560EBA0066AC5D /* Maze3.tmx */,
+				9506404C1B560EA80066AC5D /* Maze4.tmx */,
 			);
 			name = "TMX Mazes";
 			sourceTree = "<group>";
@@ -205,6 +240,19 @@
 		958F343D1B27033000A34098 /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
+				950640781B57648F0066AC5D /* AboveBeyond.mp3 */,
+				950640761B57642F0066AC5D /* ChillOut.mp3 */,
+				950640741B5763A60066AC5D /* PureCandy.mp3 */,
+				9506406E1B5757450066AC5D /* SoftSole.mp3 */,
+				9506406A1B5756CD0066AC5D /* DeepDream.mp3 */,
+				9506406B1B5756CD0066AC5D /* FirePhaser.mp3 */,
+				950640621B56159E0066AC5D /* IcyFauna.mp3 */,
+				950640661B5753D60066AC5D /* AlternatingLine.mp3 */,
+				950640671B5753D60066AC5D /* MelodicCycle.mp3 */,
+				950640601B56159E0066AC5D /* Heatseeker.mp3 */,
+				950640611B56159E0066AC5D /* Homeland.mp3 */,
+				9506405C1B5615230066AC5D /* PopStar.mp3 */,
+				9506405D1B5615230066AC5D /* Vertigo.mp3 */,
 				958F34251B2549DD00A34098 /* HungryWolf.mp3 */,
 				958F34341B26FCD500A34098 /* QuietRefrain.mp3 */,
 				958F343E1B27034400A34098 /* QuietJungle.mp3 */,
@@ -312,20 +360,36 @@
 			buildActionMask = 2147483647;
 			files = (
 				958F344A1B2805F600A34098 /* gameOver.mp3 in Resources */,
+				950640711B5762530066AC5D /* Maze6.tmx in Resources */,
 				958F343F1B27034400A34098 /* QuietJungle.mp3 in Resources */,
 				958F34011B1FEB1F00A34098 /* LaunchScreen.xib in Resources */,
 				958F34261B2549DD00A34098 /* HungryWolf.mp3 in Resources */,
 				958F34331B26F99600A34098 /* collect_something.caf in Resources */,
 				958F33FE1B1FEB1F00A34098 /* Images.xcassets in Resources */,
 				958F341D1B217C4F00A34098 /* Maze.tmx in Resources */,
+				9506404E1B560EA80066AC5D /* Maze4.tmx in Resources */,
+				950640751B5763A60066AC5D /* PureCandy.mp3 in Resources */,
+				9506405E1B5615230066AC5D /* PopStar.mp3 in Resources */,
 				958F34291B25652B00A34098 /* GameData.plist in Resources */,
-				9562BB8C1B48E109004F666B /* Maze3.tmx in Resources */,
+				9506406F1B5757450066AC5D /* SoftSole.mp3 in Resources */,
+				950640651B56159E0066AC5D /* IcyFauna.mp3 in Resources */,
+				950640771B57642F0066AC5D /* ChillOut.mp3 in Resources */,
+				950640791B57648F0066AC5D /* AboveBeyond.mp3 in Resources */,
+				950640641B56159E0066AC5D /* Homeland.mp3 in Resources */,
+				9506406C1B5756CD0066AC5D /* DeepDream.mp3 in Resources */,
+				950640681B5753D60066AC5D /* AlternatingLine.mp3 in Resources */,
+				950640691B5753D60066AC5D /* MelodicCycle.mp3 in Resources */,
+				9506405F1B5615230066AC5D /* Vertigo.mp3 in Resources */,
+				950640531B5611360066AC5D /* Maze5.tmx in Resources */,
+				950640511B560EBA0066AC5D /* Maze3.tmx in Resources */,
 				958F34371B26FD1500A34098 /* endgame.mp3 in Resources */,
 				958F33F51B1FEB1E00A34098 /* GameScene.sks in Resources */,
 				958F34171B1FED6A00A34098 /* moving.atlas in Resources */,
 				958F33FC1B1FEB1E00A34098 /* Main.storyboard in Resources */,
 				958F34391B26FF4400A34098 /* explode.caf in Resources */,
 				958F342D1B25C94D00A34098 /* GameScene2.sks in Resources */,
+				950640631B56159E0066AC5D /* Heatseeker.mp3 in Resources */,
+				9506406D1B5756CD0066AC5D /* FirePhaser.mp3 in Resources */,
 				958F34351B26FCD600A34098 /* QuietRefrain.mp3 in Resources */,
 				958F343B1B2700A300A34098 /* Maze2.tmx in Resources */,
 			);

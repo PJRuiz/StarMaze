@@ -9,7 +9,7 @@
 import Foundation
 
 var livesLeft = 3
-var currentLevel = 0
+var currentLevel = Int(arc4random_uniform(15))
 var firstSKSFile = "GameScene"
 var currentSKSFile = firstSKSFile
 

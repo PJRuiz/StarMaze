@@ -57,8 +57,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
     
     var highScoreLabel:SKLabelNode?
     
-    var isLastLevel: Bool = false
     var gameOver:Bool = false
+    var isLastLevel:Bool = false
     
     var tryAgainLabel:SKLabelNode?
     
@@ -177,16 +177,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         let gameDict = dict.objectForKey("GameSettings")! as! NSDictionary
         let levelArray: AnyObject = dict.objectForKey("LevelSettings")!
         
+        let maxLevel = dict.count - 1
+        if currentLevel == maxLevel {
+            isLastLevel = true
+        }
+        
         if let levelNSArray:NSArray = levelArray as? NSArray{
 
             var levelDict:NSDictionary = levelNSArray[currentLevel] as! NSDictionary
             
-            let maxLevel = levelNSArray.count - 1
-            println("The max level is \(maxLevel) and we are on \(currentLevel)")
-            if currentLevel == maxLevel {
-                let isLastLevel = true
-            }
-            
+           
             if let tmxFile = levelDict["TMXFile"] as? String {
                 
                 currentTMXFile = tmxFile
@@ -229,10 +229,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
             
         }
         
-        livesLeft = 3
+        livesLeft += 2
         
-        
-        self.backgroundColor = SKColor.blackColor()
+        let backgroundColors = [SKColor.blackColor(),SKColor.blueColor(),SKColor.redColor(), SKColor.magentaColor(), SKColor.orangeColor()]
+        self.backgroundColor = backgroundColors[Int(arc4random_uniform(5))]
         view.showsPhysics = gameDict["ShowPhysics"] as! Bool
         
         self.physicsWorld.gravity = CGVector(dx: 0, dy: 0)
@@ -324,6 +324,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         createPointsLabel()
         createHighScoreLabel()
         createTryAgainLabel()
+        
+        
+
         
     }
     
@@ -758,16 +761,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
     }
     
     func loadNextLevel() {
-        
-        currentLevel++
+        currentLevel = Int(arc4random_uniform(15))
         
         if (bgSoundPlayer != nil) {
             bgSoundPlayer!.stop()
             bgSoundPlayer = nil
-        }
-        
-        if isLastLevel == true {
-            currentLevel = 0
         }
         
         if useTMXFiles == true {
