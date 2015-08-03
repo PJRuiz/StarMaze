@@ -3,13 +3,6 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
-    <customFonts key="customFonts">
-        <mutableArray key="BMgermar.TTF">
-            <string>BMgermarA12</string>
-            <string>BMgermarA12</string>
-            <string>BMgermarA12</string>
-        </mutableArray>
-    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -17,106 +10,105 @@
             <rect key="frame" x="0.0" y="0.0" width="528" height="480"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="star" translatesAutoresizingMaskIntoConstraints="NO" id="Tos-6X-k6i">
-                    <rect key="frame" x="0.0" y="0.0" width="10" height="10"/>
-                    <variation key="heightClass=compact" ambiguous="YES" misplaced="YES">
-                        <rect key="frame" x="165" y="204" width="10" height="10"/>
-                    </variation>
-                </imageView>
-                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="star" translatesAutoresizingMaskIntoConstraints="NO" id="loA-6t-hkf">
-                    <rect key="frame" x="0.0" y="0.0" width="10" height="10"/>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="108" placeholderIntrinsicHeight="108" image="hero" translatesAutoresizingMaskIntoConstraints="NO" id="fvU-mH-156">
+                    <rect key="frame" x="39" y="186" width="108" height="108"/>
                     <variation key="heightClass=compact" fixedFrame="YES">
-                        <rect key="frame" x="205" y="204" width="10" height="10"/>
+                        <rect key="frame" x="20" y="155" width="108" height="108"/>
                     </variation>
                 </imageView>
-                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="star" translatesAutoresizingMaskIntoConstraints="NO" id="pjX-cb-SfG">
-                    <rect key="frame" x="0.0" y="0.0" width="10" height="10"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SpaceMaze" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dPh-h7-d8G">
+                    <rect key="frame" x="193" y="88" width="142" height="30"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="34"/>
+                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
                     <variation key="heightClass=compact" fixedFrame="YES">
-                        <rect key="frame" x="241" y="204" width="10" height="10"/>
+                        <rect key="frame" x="171" y="34" width="186" height="107"/>
                     </variation>
-                </imageView>
-                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="star" translatesAutoresizingMaskIntoConstraints="NO" id="xzN-vw-1T8">
-                    <rect key="frame" x="0.0" y="0.0" width="10" height="10"/>
-                    <variation key="heightClass=compact" fixedFrame="YES">
-                        <rect key="frame" x="281" y="204" width="10" height="10"/>
-                    </variation>
-                </imageView>
-                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="star" translatesAutoresizingMaskIntoConstraints="NO" id="huD-x2-MC7">
-                    <rect key="frame" x="0.0" y="0.0" width="10" height="10"/>
-                    <variation key="heightClass=compact" fixedFrame="YES">
-                        <rect key="frame" x="319" y="204" width="10" height="10"/>
-                    </variation>
-                </imageView>
-                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="star" translatesAutoresizingMaskIntoConstraints="NO" id="ECL-NI-2VO">
-                    <rect key="frame" x="0.0" y="0.0" width="10" height="10"/>
-                    <variation key="heightClass=compact" fixedFrame="YES">
-                        <rect key="frame" x="359" y="204" width="10" height="10"/>
-                    </variation>
-                </imageView>
-                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="star" translatesAutoresizingMaskIntoConstraints="NO" id="QJF-J8-k8N">
-                    <rect key="frame" x="0.0" y="0.0" width="10" height="10"/>
-                    <variation key="heightClass=compact" fixedFrame="YES">
-                        <rect key="frame" x="395" y="204" width="10" height="10"/>
-                    </variation>
-                </imageView>
-                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="star" translatesAutoresizingMaskIntoConstraints="NO" id="ncQ-NT-fLi">
-                    <rect key="frame" x="0.0" y="0.0" width="10" height="10"/>
-                    <variation key="heightClass=compact" fixedFrame="YES">
-                        <rect key="frame" x="435" y="204" width="10" height="10"/>
-                    </variation>
-                </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Swipe to Move" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bfx-ux-gKM">
-                    <rect key="frame" x="0.0" y="0.0" width="142" height="23"/>
-                    <fontDescription key="fontDescription" name="BMgermarA12" family="BM germar" pointSize="23"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Swipe to Move" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bfx-ux-gKM">
+                    <rect key="frame" x="189" y="309" width="151" height="28"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="23"/>
                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                     <variation key="heightClass=compact" ambiguous="YES" misplaced="YES">
                         <rect key="frame" x="143" y="303" width="243" height="21"/>
                     </variation>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="StarMaze" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dPh-h7-d8G">
-                    <rect key="frame" x="0.0" y="0.0" width="142" height="34"/>
-                    <fontDescription key="fontDescription" name="BMgermarA12" family="BM germar" pointSize="34"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Don't Get Caught" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hZC-Kh-RWV">
+                    <rect key="frame" x="176" y="366" width="177" height="28"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="23"/>
                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
-                    <variation key="heightClass=compact" fixedFrame="YES">
-                        <rect key="frame" x="171" y="34" width="186" height="107"/>
-                    </variation>
-                    <variation key="heightClass=compact-widthClass=regular" fixedFrame="YES">
-                        <rect key="frame" x="0.0" y="0.0" width="142" height="34"/>
+                    <variation key="heightClass=compact" ambiguous="YES" misplaced="YES">
+                        <rect key="frame" x="143" y="303" width="243" height="21"/>
                     </variation>
                 </label>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="  Copyright (c) 2015 Pedro Ruíz. All rights reserved." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="8ie-xW-0ye">
-                    <rect key="frame" x="0.0" y="443" width="372" height="17"/>
-                    <fontDescription key="fontDescription" name="BMgermarA12" family="BM germar" pointSize="17"/>
-                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="108" placeholderIntrinsicHeight="108" image="moving0003@3x.png" translatesAutoresizingMaskIntoConstraints="NO" id="fvU-mH-156">
-                    <rect key="frame" x="0.0" y="186" width="108" height="108"/>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="72" placeholderIntrinsicHeight="72" image="enemy2" translatesAutoresizingMaskIntoConstraints="NO" id="MhF-hH-GX5">
+                    <rect key="frame" x="352" y="204" width="72" height="72"/>
                     <variation key="heightClass=compact" fixedFrame="YES">
                         <rect key="frame" x="20" y="155" width="108" height="108"/>
                     </variation>
                 </imageView>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="258" horizontalCompressionResistancePriority="747" text="  Copyright (c) 2015 Pedro Ruíz. All rights reserved." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="8ie-xW-0ye">
+                    <rect key="frame" x="62" y="454" width="391" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="iTN-uh-ZUx"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstAttribute="centerY" secondItem="fvU-mH-156" secondAttribute="centerY" id="F8G-km-7hm"/>
-                <constraint firstAttribute="bottom" secondItem="8ie-xW-0ye" secondAttribute="bottom" constant="20" id="Kzo-t9-V3l"/>
-                <constraint firstItem="fvU-mH-156" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="U5H-DY-c8n"/>
+                <constraint firstAttribute="centerX" secondItem="hZC-Kh-RWV" secondAttribute="centerX" constant="-0.5" id="B18-kh-bQ9"/>
+                <constraint firstAttribute="trailing" secondItem="MhF-hH-GX5" secondAttribute="trailing" constant="104" id="Ih9-sI-gpl"/>
+                <constraint firstAttribute="centerX" secondItem="fvU-mH-156" secondAttribute="centerX" constant="171" id="JX7-8Y-CQW"/>
+                <constraint firstAttribute="bottom" secondItem="8ie-xW-0ye" secondAttribute="bottom" constant="5" id="Kzo-t9-V3l"/>
+                <constraint firstAttribute="centerY" secondItem="fvU-mH-156" secondAttribute="centerY" id="Med-99-A1I"/>
+                <constraint firstItem="fvU-mH-156" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="39" id="MoS-ja-pNm"/>
+                <constraint firstAttribute="centerY" secondItem="MhF-hH-GX5" secondAttribute="centerY" id="Mr7-ml-g50"/>
+                <constraint firstAttribute="bottom" secondItem="hZC-Kh-RWV" secondAttribute="bottom" constant="86" id="Rf6-K0-F4l"/>
+                <constraint firstAttribute="bottom" secondItem="8ie-xW-0ye" secondAttribute="bottom" constant="18" id="Snc-yJ-XKk">
+                    <variation key="heightClass=compact-widthClass=regular" constant="36"/>
+                </constraint>
+                <constraint firstAttribute="centerX" secondItem="dPh-h7-d8G" secondAttribute="centerX" id="TZu-oz-6Jr"/>
+                <constraint firstItem="fvU-mH-156" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="39" id="U5H-DY-c8n"/>
+                <constraint firstItem="8ie-xW-0ye" firstAttribute="top" secondItem="dPh-h7-d8G" secondAttribute="bottom" constant="336" id="euc-x0-6cR"/>
+                <constraint firstAttribute="bottom" secondItem="bfx-ux-gKM" secondAttribute="bottom" constant="143" id="ixV-oi-X7B"/>
+                <constraint firstAttribute="centerY" secondItem="fvU-mH-156" secondAttribute="centerY" id="pRW-Vb-ps2"/>
+                <constraint firstItem="dPh-h7-d8G" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="88" id="sCP-gi-yB4"/>
+                <constraint firstAttribute="centerX" secondItem="bfx-ux-gKM" secondAttribute="centerX" id="sKV-eJ-Hd1"/>
+                <constraint firstAttribute="centerY" secondItem="fvU-mH-156" secondAttribute="centerY" id="xvn-Wt-UUQ"/>
+                <constraint firstAttribute="centerX" secondItem="8ie-xW-0ye" secondAttribute="centerX" constant="7" id="ydN-hi-sdD"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="JX7-8Y-CQW"/>
+                    <exclude reference="U5H-DY-c8n"/>
+                    <exclude reference="pRW-Vb-ps2"/>
+                    <exclude reference="xvn-Wt-UUQ"/>
+                    <exclude reference="Snc-yJ-XKk"/>
+                </mask>
+            </variation>
             <variation key="heightClass=compact">
                 <mask key="constraints">
                     <exclude reference="Kzo-t9-V3l"/>
                 </mask>
             </variation>
-            <point key="canvasLocation" x="572" y="455"/>
+            <variation key="heightClass=compact-widthClass=regular">
+                <mask key="constraints">
+                    <include reference="Snc-yJ-XKk"/>
+                    <exclude reference="euc-x0-6cR"/>
+                </mask>
+            </variation>
+            <point key="canvasLocation" x="570" y="444"/>
         </view>
     </objects>
     <resources>
-        <image name="moving0003@3x.png" width="108" height="108"/>
-        <image name="star" width="10" height="10"/>
+        <image name="enemy2" width="45" height="45"/>
+        <image name="hero" width="36" height="36"/>
     </resources>
 </document>

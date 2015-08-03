@@ -62,6 +62,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
     
     var tryAgainLabel:SKLabelNode?
     
+    var scoreMultiplier = 0
+    
     //MARK: - Music Player
     
      var bgSoundPlayer:AVAudioPlayer?
@@ -231,8 +233,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         
         livesLeft += 2
         
-        let backgroundColors = [SKColor.blackColor(),SKColor.blueColor(),SKColor.redColor(), SKColor.magentaColor(), SKColor.orangeColor()]
-        self.backgroundColor = backgroundColors[Int(arc4random_uniform(5))]
+        let backgroundColors = [SKColor.blackColor(),SKColor.blueColor(),SKColor.redColor(), SKColor.orangeColor()]
+        self.backgroundColor = backgroundColors[Int(arc4random_uniform(3))]
         view.showsPhysics = gameDict["ShowPhysics"] as! Bool
         
         self.physicsWorld.gravity = CGVector(dx: 0, dy: 0)
@@ -328,7 +330,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         
 
         
-    }
+    } //END
     
     //MARK: - Setup from SKS
     func setUpBoundaryFromSKS() {
